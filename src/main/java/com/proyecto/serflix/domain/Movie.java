@@ -31,6 +31,14 @@ public class Movie implements Serializable {
     @JsonIgnore
     private Set<MovieRecomendation> movieRecomendations = new HashSet<>();
 
+    public Movie() {
+    }
+
+    public Movie(String name, Long idExternalApi) {
+        this.name = name;
+        this.idExternalApi = idExternalApi;
+    }
+
     public Long getId() {
         return id;
     }

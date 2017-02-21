@@ -3,11 +3,15 @@ package com.proyecto.serflix;
 import com.proyecto.serflix.config.Constants;
 import com.proyecto.serflix.config.DefaultProfileUtil;
 import com.proyecto.serflix.config.JHipsterProperties;
-
+import com.proyecto.serflix.domain.Movie;
+import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
+import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
+import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.*;
+import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
+import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,6 +24,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
@@ -70,6 +75,20 @@ public class SerflixApp {
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"));
+        //Prueba pelicula
+        MovieDTOService movieDTOService = new MovieDTOService();
+        MovieDTO movie = movieDTOService.getMovie(274870);
+        System.out.println("Movie: ");
+        System.out.println(movie);
 
+        //Prueba lista de generos
+        List<Genre> lista = movieDTOService.getGenres();
+        System.out.println("Lista de generos: ");
+        System.out.println(lista);
+
+        //Prueba obtener Movie(Domain) from Movie(DTO)
+        Movie movieDomain = movieDTOService.getMovieFromDto(movie);
+        System.out.println("Movie(Domain): ");
+        System.out.println(movieDomain);
     }
 }
