@@ -3,7 +3,7 @@ package com.proyecto.serflix.service.dto.WeatherDatabase;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherDatabase {
+public class WeatherData {
 
     @SerializedName("latitude")
     @Expose
@@ -83,4 +83,16 @@ public class WeatherDatabase {
         this.daily = daily;
     }
 
+    @Override
+    public String toString() {
+        return "WeatherData{" +
+            "latitude=" + latitude +
+            ", longitude=" + longitude +
+            ", timezone='" + timezone + '\'' +
+            ", offset=" + offset +
+            ", currently=" + currently +
+            ", hourly=" + hourly +
+            ", daily=" + daily +
+            '}';
+    }
 }

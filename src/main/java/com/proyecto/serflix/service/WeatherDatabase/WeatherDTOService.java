@@ -1,6 +1,8 @@
 package com.proyecto.serflix.service.WeatherDatabase;
 
-import com.proyecto.serflix.service.dto.WeatherDatabase.Currently;
+
+import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
+import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import retrofit2.Call;
 
 import java.io.IOException;
@@ -11,14 +13,14 @@ public class WeatherDTOService {
 
     //https://api.darksky.net/forecast/b663aac760fab18d52b433a1d2c84a5e/37.8267,-122.4233?exclude=minutely,flags
 
-    public static Currently getCurrentlyWeather(double lat, double lon){
-        Currently currently = null;
-        Call<Currently> currentlyCall = apiService.getIcon(lat, lon, apiKey);
+    public static WeatherData getWeatherData(LocationDTO location){
+        WeatherData weatherData = null;
+        Call<WeatherData> weatherDataCall = apiService.getIcon(apiKey, location.getCoordinates());
         try{
-            currently = currentlyCall.execute().body();
+            weatherData = weatherDataCall.execute().body();
         }catch (IOException e){
             e.printStackTrace();
         }
-        return currently;
+        return weatherData;
     }
 }

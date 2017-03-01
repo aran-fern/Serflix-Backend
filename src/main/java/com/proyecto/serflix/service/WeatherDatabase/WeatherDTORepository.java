@@ -1,18 +1,17 @@
 package com.proyecto.serflix.service.WeatherDatabase;
 
-import com.proyecto.serflix.service.dto.WeatherDatabase.Currently;
+import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import org.springframework.stereotype.Repository;
 import retrofit2.Call;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 @Repository
 public interface WeatherDTORepository {
-    @GET("forecast/{lat},{lon}?exclude=minutely,flags")
-    Call<Currently> getIcon(@Path("lat") double lat, @Path("lon") double lon, @Query("api_key") String apiKey);
+    @GET("forecast/{apiKey}/{coordinates}?exclude=minutely,flags")
+    Call<WeatherData> getIcon(@Path("apiKey") String apikey, @Path("coordinates") String coordinates);
 
 
 

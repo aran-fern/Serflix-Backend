@@ -39,4 +39,12 @@ public class Daily {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "Daily{" +
+            "summary='" + summary + '\'' +
+            ", icon='" + icon + '\'' +
+            ", data=" + data +
+            '}';
+    }
 }

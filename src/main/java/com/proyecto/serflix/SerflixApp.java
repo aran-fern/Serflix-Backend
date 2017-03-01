@@ -3,12 +3,15 @@ package com.proyecto.serflix;
 import com.proyecto.serflix.config.Constants;
 import com.proyecto.serflix.config.DefaultProfileUtil;
 import com.proyecto.serflix.config.JHipsterProperties;
+import com.proyecto.serflix.domain.Location;
 import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
 import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
 import com.proyecto.serflix.service.dto.WeatherDatabase.Currently;
+import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
+import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -95,8 +98,9 @@ public class SerflixApp {
 
         //Prueba para obtener Weather
         WeatherDTOService weatherDTOService = new WeatherDTOService();
-        Currently currently = weatherDTOService.getCurrentlyWeather(37.8267, -122.4233);
-        System.out.println("Weather icon: L.A.");
-        System.out.println(currently);
+        LocationDTO locationDTO = new LocationDTO(37.8267,-122.4233);
+        WeatherData weatherData = weatherDTOService.getWeatherData(locationDTO);
+        System.out.println("Weather in L.A.");
+        System.out.println(weatherData);
     }
 }

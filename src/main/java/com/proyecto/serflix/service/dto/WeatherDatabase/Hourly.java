@@ -40,4 +40,12 @@ public class Hourly {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "Hourly{" +
+            "summary='" + summary + '\'' +
+            ", icon='" + icon + '\'' +
+            ", data=" + data +
+            '}';
+    }
 }

@@ -6,6 +6,7 @@ import com.proyecto.serflix.service.dto.MovieDatabase.GenreList;
 import com.proyecto.serflix.service.dto.MovieDatabase.KeywordList;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
 import javassist.compiler.ast.Keyword;
+import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+@Service
 public class MovieDTOService {
     public static final String apiKey = "e9146e088c2bfd128d974ae6fe70bdf4";
     static MovieDTORepository apiService = MovieDTORepository.retrofit.create(MovieDTORepository.class);

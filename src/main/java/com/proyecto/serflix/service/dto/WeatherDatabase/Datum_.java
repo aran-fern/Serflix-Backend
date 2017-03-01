@@ -76,7 +76,7 @@ public class Datum_ {
     private Integer windBearing;
     @SerializedName("visibility")
     @Expose
-    private Integer visibility;
+    private Double visibility;
     @SerializedName("cloudCover")
     @Expose
     private Double cloudCover;
@@ -271,11 +271,11 @@ public class Datum_ {
         this.windBearing = windBearing;
     }
 
-    public Integer getVisibility() {
+    public Double getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(Integer visibility) {
+    public void setVisibility(Double visibility) {
         this.visibility = visibility;
     }
 
@@ -303,4 +303,36 @@ public class Datum_ {
         this.ozone = ozone;
     }
 
+    @Override
+    public String toString() {
+        return "Datum_{" +
+            "time=" + time +
+            ", summary='" + summary + '\'' +
+            ", icon='" + icon + '\'' +
+            ", sunriseTime=" + sunriseTime +
+            ", sunsetTime=" + sunsetTime +
+            ", moonPhase=" + moonPhase +
+            ", precipIntensity=" + precipIntensity +
+            ", precipIntensityMax=" + precipIntensityMax +
+            ", precipIntensityMaxTime=" + precipIntensityMaxTime +
+            ", precipProbability=" + precipProbability +
+            ", precipType='" + precipType + '\'' +
+            ", temperatureMin=" + temperatureMin +
+            ", temperatureMinTime=" + temperatureMinTime +
+            ", temperatureMax=" + temperatureMax +
+            ", temperatureMaxTime=" + temperatureMaxTime +
+            ", apparentTemperatureMin=" + apparentTemperatureMin +
+            ", apparentTemperatureMinTime=" + apparentTemperatureMinTime +
+            ", apparentTemperatureMax=" + apparentTemperatureMax +
+            ", apparentTemperatureMaxTime=" + apparentTemperatureMaxTime +
+            ", dewPoint=" + dewPoint +
+            ", humidity=" + humidity +
+            ", windSpeed=" + windSpeed +
+            ", windBearing=" + windBearing +
+            ", visibility=" + visibility +
+            ", cloudCover=" + cloudCover +
+            ", pressure=" + pressure +
+            ", ozone=" + ozone +
+            '}';
+    }
 }

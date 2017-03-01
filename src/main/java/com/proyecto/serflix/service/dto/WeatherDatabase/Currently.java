@@ -191,4 +191,27 @@ public class Currently {
     public void setOzone(Double ozone) {
         this.ozone = ozone;
     }
+
+    @Override
+    public String toString() {
+        return "Currently{" +
+            "time=" + time +
+            ", summary='" + summary + '\'' +
+            ", icon='" + icon + '\'' +
+            ", nearestStormDistance=" + nearestStormDistance +
+            ", nearestStormBearing=" + nearestStormBearing +
+            ", precipIntensity=" + precipIntensity +
+            ", precipProbability=" + precipProbability +
+            ", temperature=" + temperature +
+            ", apparentTemperature=" + apparentTemperature +
+            ", dewPoint=" + dewPoint +
+            ", humidity=" + humidity +
+            ", windSpeed=" + windSpeed +
+            ", windBearing=" + windBearing +
+            ", visibility=" + visibility +
+            ", cloudCover=" + cloudCover +
+            ", pressure=" + pressure +
+            ", ozone=" + ozone +
+            '}';
+    }
 }

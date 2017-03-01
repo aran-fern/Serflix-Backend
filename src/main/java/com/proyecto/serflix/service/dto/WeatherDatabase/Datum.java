@@ -42,7 +42,7 @@ public class Datum {
     private Integer windBearing;
     @SerializedName("visibility")
     @Expose
-    private Integer visibility;
+    private Double visibility;
     @SerializedName("cloudCover")
     @Expose
     private Double cloudCover;
@@ -149,11 +149,11 @@ public class Datum {
         this.windBearing = windBearing;
     }
 
-    public Integer getVisibility() {
+    public Double getVisibility() {
         return visibility;
     }
 
-    public void setVisibility(Integer visibility) {
+    public void setVisibility(Double visibility) {
         this.visibility = visibility;
     }
 
@@ -181,4 +181,25 @@ public class Datum {
         this.ozone = ozone;
     }
 
+    @Override
+    public String toString() {
+        return "Datum{" +
+            "time=" + time +
+            ", summary='" + summary + '\'' +
+            ", icon='" + icon + '\'' +
+            ", precipIntensity=" + precipIntensity +
+            ", precipProbability=" + precipProbability +
+            ", precipType='" + precipType + '\'' +
+            ", temperature=" + temperature +
+            ", apparentTemperature=" + apparentTemperature +
+            ", dewPoint=" + dewPoint +
+            ", humidity=" + humidity +
+            ", windSpeed=" + windSpeed +
+            ", windBearing=" + windBearing +
+            ", visibility=" + visibility +
+            ", cloudCover=" + cloudCover +
+            ", pressure=" + pressure +
+            ", ozone=" + ozone +
+            '}';
+    }
 }
