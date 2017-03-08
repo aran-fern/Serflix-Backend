@@ -102,5 +102,6 @@ public class SerflixApp {
         WeatherData weatherData = weatherDTOService.getWeatherData(locationDTO);
         System.out.println("Weather in L.A.");
         System.out.println(weatherData);
+
     }
 }

@@ -4,6 +4,8 @@ import com.codahale.metrics.annotation.Timed;
 import com.proyecto.serflix.domain.Request;
 
 import com.proyecto.serflix.repository.RequestRepository;
+import com.proyecto.serflix.service.MapsAPI.MapsDTOService;
+import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Request.
@@ -26,7 +29,9 @@ import java.util.Optional;
 public class RequestResource {
 
     private final Logger log = LoggerFactory.getLogger(RequestResource.class);
-        
+    @Inject
+    private MapsDTOService mapsDTOService;
+
     @Inject
     private RequestRepository requestRepository;
 
@@ -97,6 +102,47 @@ public class RequestResource {
         log.debug("REST request to get Request : {}", id);
         Request request = requestRepository.findOneWithEagerRelationships(id);
         return Optional.ofNullable(request)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/requests/geocode/{latlng}")
+    @Timed
+    public ResponseEntity<AddressDTO> getRequest(@PathVariable String latlng) {
+        log.debug("REST request to get Request : {}", latlng);
+        AddressDTO addressDTO = mapsDTOService.getGeocode(latlng);
+
+
+        String country = addressDTO.
+            getResults().
+            stream().
+            filter(result -> result.getTypes().
+                contains("country")).collect(Collectors.toList())
+            .get(0).getFormattedAddress();
+        System.out.println(country);
+
+        String state = addressDTO.
+            getResults().
+            stream().
+            filter(result -> result.getTypes().
+                contains("administrative_area_level_1")).collect(Collectors.toList())
+            .get(0).getFormattedAddress();
+        System.out.println(state);
+
+        String city = addressDTO.
+            getResults().
+            stream().
+            filter(result -> result.getTypes().
+                contains("administrative_area_level_2")).collect(Collectors.toList())
+            .get(0).getFormattedAddress();
+        System.out.println(city);
+
+
+
+
+        return Optional.ofNullable(addressDTO)
             .map(result -> new ResponseEntity<>(
                 result,
                 HttpStatus.OK))
