@@ -5,7 +5,10 @@ import com.proyecto.serflix.domain.Request;
 
 import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.service.MapsAPI.MapsDTOService;
+import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
+import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
+import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +32,12 @@ import java.util.stream.Collectors;
 public class RequestResource {
 
     private final Logger log = LoggerFactory.getLogger(RequestResource.class);
+
     @Inject
     private MapsDTOService mapsDTOService;
+
+    @Inject
+    private WeatherDTOService weatherDTOService;
 
     @Inject
     private RequestRepository requestRepository;
@@ -110,7 +117,7 @@ public class RequestResource {
 
     @GetMapping("/requests/geocode/{latlng}")
     @Timed
-    public ResponseEntity<AddressDTO> getRequest(@PathVariable String latlng) {
+    public ResponseEntity<AddressDTO> getGeocodeRequest(@PathVariable String latlng) {
         log.debug("REST request to get Request : {}", latlng);
         AddressDTO addressDTO = mapsDTOService.getGeocode(latlng);
 
@@ -140,9 +147,25 @@ public class RequestResource {
         System.out.println(city);
 
 
-
-
         return Optional.ofNullable(addressDTO)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/requests/weather/{latlng}")
+    @Timed
+    public ResponseEntity<WeatherData> getWeatherRequest(@PathVariable String latlng) {
+        //String latlng only for test, must change to a LocationDTO variable(Change in service too)
+        log.debug("REST request to get Request : {}", latlng);
+        WeatherData weatherData = weatherDTOService.getWeatherData(latlng);
+
+        String weather = weatherData.getCurrently().getIcon().toString();
+        System.out.println(weather);
+
+
+        return Optional.ofNullable(weatherData)
             .map(result -> new ResponseEntity<>(
                 result,
                 HttpStatus.OK))
