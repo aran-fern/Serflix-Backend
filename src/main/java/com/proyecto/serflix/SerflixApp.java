@@ -96,11 +96,11 @@ public class SerflixApp {
         System.out.println("Movie(Domain): ");
         System.out.println(movieDomain);
 
-        //Prueba para obtener Weather
+//        Prueba para obtener Weather
 //        WeatherDTOService weatherDTOService = new WeatherDTOService();
 //        LocationDTO locationDTO = new LocationDTO(37.8267,-122.4233);
-//        WeatherData weatherData = weatherDTOService.getWeatherData(locationDTO);
-//        System.out.println("Weather in L.A.");
+//        WeatherData weatherData = weatherDTOService.getWeatherData("41.479743, 1.983931");
+//        System.out.println("Weather in Castellbisbal.");
 //        System.out.println(weatherData);
 
     }

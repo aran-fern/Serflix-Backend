@@ -154,16 +154,19 @@ public class RequestResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/requests/currentweather/{latlng}")
+    @GetMapping("/requests/weather/{latlng}")
     @Timed
     public ResponseEntity<WeatherData> getWeatherRequest(@PathVariable String latlng) {
         //String latlng only for test, must change to a LocationDTO variable(Change in service too)
         log.debug("REST request to get Request : {}", latlng);
         WeatherData weatherData = weatherDTOService.getWeatherData(latlng);
 
-        String weather = weatherData.getCurrently().getIcon().toString();
-        System.out.println(weather);
-
+        String currently = weatherData.getCurrently().getIcon().toString();
+        //Tiempo actual
+        System.out.println(currently);
+        //Tiempo dentro de 48h
+        String hourly = weatherData.getHourly().getData().get(49).getIcon().toString();
+        System.out.println(hourly);
 
         return Optional.ofNullable(weatherData)
             .map(result -> new ResponseEntity<>(
