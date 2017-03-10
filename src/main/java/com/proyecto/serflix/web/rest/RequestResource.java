@@ -154,7 +154,7 @@ public class RequestResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/requests/weather/{latlng}")
+    @GetMapping("/requests/currentweather/{latlng}")
     @Timed
     public ResponseEntity<WeatherData> getWeatherRequest(@PathVariable String latlng) {
         //String latlng only for test, must change to a LocationDTO variable(Change in service too)
