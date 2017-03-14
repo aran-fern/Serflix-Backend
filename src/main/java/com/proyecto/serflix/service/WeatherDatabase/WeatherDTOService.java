@@ -15,6 +15,9 @@ public class WeatherDTOService {
 
     //https://api.darksky.net/forecast/b663aac760fab18d52b433a1d2c84a5e/37.8267,-122.4233?exclude=minutely,flags
 
+    //TODO
+    //Crear getCurrentWeather, getHourWeather, getDayWeather (Forecast)
+
     public WeatherData getWeatherData(String location){
         WeatherData weatherData = null;
         Call<WeatherData> weatherDataCall = apiService.getIcon(apiKey, location);

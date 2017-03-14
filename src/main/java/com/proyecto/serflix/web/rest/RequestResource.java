@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.xml.bind.SchemaOutputResolver;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -165,8 +166,14 @@ public class RequestResource {
         //Tiempo actual
         System.out.println(currently);
         //Tiempo dentro de 48h
-        String hourly = weatherData.getHourly().getData().get(49).getIcon().toString();
+        String hourly = weatherData.getHourly().getData().get(0).getIcon().toString();
         System.out.println(hourly);
+        //Tiempo lunes de esta semana
+        String daily = weatherData.getDaily().getData().get(0).getIcon().toString();
+        System.out.println(daily);
+        //Tiempo lunes de la semana siguiente
+        String daily2 = weatherData.getDaily().getData().get(7).getIcon().toString();
+        System.out.println(daily2);
 
         return Optional.ofNullable(weatherData)
             .map(result -> new ResponseEntity<>(
