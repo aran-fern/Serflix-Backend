@@ -1,11 +1,12 @@
 
 package com.proyecto.serflix.service.dto.MapsAPI;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+import java.util.List;
+
+public class  Result {
 
     @SerializedName("address_components")
     @Expose

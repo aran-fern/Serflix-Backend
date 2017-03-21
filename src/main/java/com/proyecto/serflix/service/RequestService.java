@@ -38,7 +38,7 @@ public class RequestService {
     public Request buildRequest(RequestDTO requestFromAndroid){
         //!!!!!!!!!!FALTA!!!!!!!!!
         //Get Location del servicio
-        Location location = new Location();
+        Location location = mapsDTOService.getLocation(requestFromAndroid.getLocation().getCoordinates());
         //
 
         Set<Forecast> forecasts = new HashSet<>();
@@ -51,8 +51,8 @@ public class RequestService {
             ZonedDateTime.ofInstant(requestFromAndroid.getCreationDate().toInstant(), ZoneId.systemDefault());
         User userRequester = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         if (viewDate.isBefore(ZonedDateTime.now().plusHours(3))){
-            //Forecast currentForecast = weatherDTOService.getCurrentForecast(location);
-            //forecasts.add(currentForecast);
+            Forecast currentForecast = weatherDTOService.getCurrentForecast(requestFromAndroid.getLocation().getCoordinates());
+            forecasts.add(currentForecast);
         }
 
         Request request = new Request(type, name, viewDate, creationDate, company, userRequester, location, forecasts);
