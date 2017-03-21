@@ -1,19 +1,10 @@
 package com.proyecto.serflix.service.MapsAPI;
 
-import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
-import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
-import com.proyecto.serflix.service.dto.MovieDatabase.GenreList;
-import com.proyecto.serflix.service.dto.MovieDatabase.KeywordList;
-import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
-import javassist.compiler.ast.Keyword;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -31,6 +22,8 @@ public class MapsDTOService {
         }
         return addressDTO;
     }
+
+    //Metodo devolver Location
 
 //    public static Movie getMovieFromDto(MovieDTO d){
 //        Long id = new Long(d.getId());

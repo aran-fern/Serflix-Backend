@@ -69,6 +69,37 @@ public class Request implements Serializable {
     @JsonIgnore
     private Set<Preferences> preferences = new HashSet<>();
 
+    public Request(Type type, String name, ZonedDateTime viewDate, ZonedDateTime creationDate, Company company, User userRequester, Location location, Set<User> userGuests, Set<Forecast> forecasts, Set<MovieRecomendation> movieRecomendations, Set<SerieRecomendation> serieRecomendations, Set<Preferences> preferences) {
+        this.type = type;
+        this.name = name;
+        this.viewDate = viewDate;
+        this.creationDate = creationDate;
+        this.company = company;
+        this.userRequester = userRequester;
+        this.location = location;
+        this.userGuests = userGuests;
+        this.forecasts = forecasts;
+        this.movieRecomendations = movieRecomendations;
+        this.serieRecomendations = serieRecomendations;
+        this.preferences = preferences;
+    }
+
+    public Request(Type type, String name, ZonedDateTime viewDate, ZonedDateTime creationDate, Company company, User userRequester, Location location, Set<User> userGuests, Set<Forecast> forecasts, Set<Preferences> preferences) {
+        this.type = type;
+        this.name = name;
+        this.viewDate = viewDate;
+        this.creationDate = creationDate;
+        this.company = company;
+        this.userRequester = userRequester;
+        this.location = location;
+        this.userGuests = userGuests;
+        this.forecasts = forecasts;
+        this.preferences = preferences;
+    }
+
+    public Request() {
+    }
+
     public Long getId() {
         return id;
     }
