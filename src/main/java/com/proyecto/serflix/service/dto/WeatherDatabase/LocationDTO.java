@@ -1,8 +1,16 @@
 package com.proyecto.serflix.service.dto.WeatherDatabase;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class LocationDTO {
-    private double latitude;
-    private double longitude;
+    @SerializedName("lat")
+    @Expose
+    private Double latitude;
+    @SerializedName("lng")
+    @Expose
+    private Double longitude;
+
 
     public LocationDTO(double latitude, double longitude) {
         this.latitude = latitude;

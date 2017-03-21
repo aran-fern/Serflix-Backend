@@ -1,11 +1,11 @@
 package com.proyecto.serflix.domain;
 
 
+import com.proyecto.serflix.domain.enumeration.Weather;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-
-import com.proyecto.serflix.domain.enumeration.Weather;
 
 /**
  * A Forecast.
@@ -45,6 +45,14 @@ public class Forecast implements Serializable {
     public Forecast temperature(Double temperature) {
         this.temperature = temperature;
         return this;
+    }
+
+    public Forecast() {
+    }
+
+    public Forecast(Double temperature, Weather weather) {
+        this.temperature = temperature;
+        this.weather = weather;
     }
 
     public void setTemperature(Double temperature) {

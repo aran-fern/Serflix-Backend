@@ -1,7 +1,9 @@
 package com.proyecto.serflix.service.WeatherDatabase;
 
 
-import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
+import com.proyecto.serflix.domain.Forecast;
+import com.proyecto.serflix.domain.enumeration.Weather;
+import com.proyecto.serflix.service.dto.WeatherDatabase.Currently;
 import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
@@ -18,14 +20,55 @@ public class WeatherDTOService {
     //TODO
     //Crear getCurrentWeather, getHourWeather, getDayWeather (Forecast)
 
-    public WeatherData getWeatherData(String location){
+    public Forecast getCurrentForecast(String location) {
+        Forecast forecast = new Forecast();
         WeatherData weatherData = null;
-        Call<WeatherData> weatherDataCall = apiService.getIcon(apiKey, location);
-        try{
+        //Double temperature, Weather weather
+        Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
+        try {
             weatherData = weatherDataCall.execute().body();
-        }catch (IOException e){
+            Currently currently = weatherData.getCurrently();
+            forecast.setTemperature(currently.getTemperature());
+            forecast.setWeather(getWeatherFromIcon(currently.getIcon()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return forecast;
+    }
+
+    public WeatherData getWeatherData(String location) {
+        WeatherData weatherData = null;
+        Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
+        try {
+            weatherData = weatherDataCall.execute().body();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return weatherData;
+    }
+
+    public Weather getWeatherFromIcon(String icon) {
+        switch (icon) {
+            case "clear-day":
+                return Weather.CLEAR;
+            case "clear-night":
+                return Weather.CLEAR;
+            case "rain":
+                return Weather.CLEAR;
+            case "snow":
+                return Weather.CLEAR;
+            case "sleet":
+                return Weather.CLEAR;
+            case "wind":
+                return Weather.CLEAR;
+            case "fog":
+                return Weather.CLEAR;
+            case "partly-cloudy-day":
+                return Weather.CLEAR;
+            case "partly-cloudy-night":
+                return Weather.CLEAR;
+            default:
+                return Weather.CLEAR;
+        }
     }
 }

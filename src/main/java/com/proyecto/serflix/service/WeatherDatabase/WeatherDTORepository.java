@@ -11,9 +11,7 @@ import retrofit2.http.Path;
 @Repository
 public interface WeatherDTORepository {
     @GET("forecast/{apiKey}/{coordinates}?exclude=minutely,flags")
-    Call<WeatherData> getIcon(@Path("apiKey") String apikey, @Path("coordinates") String coordinates);
-
-
+    Call<WeatherData> getWeatherData(@Path("apiKey") String apikey, @Path("coordinates") String coordinates);
 
     //URL ENTERA : https://api.darksky.net/forecast/b663aac760fab18d52b433a1d2c84a5e/37.8267,-122.4233?exclude=minutely,flags
     public static String url = "https://api.darksky.net/";

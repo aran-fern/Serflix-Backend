@@ -84,7 +84,7 @@ public class Request implements Serializable {
         this.preferences = preferences;
     }
 
-    public Request(Type type, String name, ZonedDateTime viewDate, ZonedDateTime creationDate, Company company, User userRequester, Location location, Set<User> userGuests, Set<Forecast> forecasts, Set<Preferences> preferences) {
+    public Request(Type type, String name, ZonedDateTime viewDate, ZonedDateTime creationDate, Company company, User userRequester, Location location, Set<Forecast> forecasts) {
         this.type = type;
         this.name = name;
         this.viewDate = viewDate;
@@ -94,7 +94,6 @@ public class Request implements Serializable {
         this.location = location;
         this.userGuests = userGuests;
         this.forecasts = forecasts;
-        this.preferences = preferences;
     }
 
     public Request() {
