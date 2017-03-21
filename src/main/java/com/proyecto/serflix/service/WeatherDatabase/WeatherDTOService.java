@@ -54,19 +54,25 @@ public class WeatherDTOService {
             case "clear-night":
                 return Weather.CLEAR;
             case "rain":
-                return Weather.CLEAR;
+                return Weather.RAIN;
             case "snow":
-                return Weather.CLEAR;
+                return Weather.SNOW;
             case "sleet":
-                return Weather.CLEAR;
+                return Weather.SNOW;
             case "wind":
                 return Weather.CLEAR;
             case "fog":
-                return Weather.CLEAR;
+                return Weather.CLOUDY;
             case "partly-cloudy-day":
-                return Weather.CLEAR;
+                return Weather.PARTLY_CLOUDY;
             case "partly-cloudy-night":
-                return Weather.CLEAR;
+                return Weather.PARTLY_CLOUDY;
+            case "hail":
+                return Weather.RAIN;
+            case "thunderstorm":
+                return Weather.RAIN;
+            case "tornado":
+                return Weather.CLOUDY;
             default:
                 return Weather.CLEAR;
         }
