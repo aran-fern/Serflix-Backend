@@ -3,12 +3,13 @@ package com.proyecto.serflix.service.dto.MapsAPI;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
 
 public class Geometry {
 
     @SerializedName("location")
     @Expose
-    private Location location;
+    private LocationDTO location;
     @SerializedName("location_type")
     @Expose
     private String locationType;
@@ -19,11 +20,11 @@ public class Geometry {
     @Expose
     private Bounds bounds;
 
-    public Location getLocation() {
+    public LocationDTO getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LocationDTO location) {
         this.location = location;
     }
 

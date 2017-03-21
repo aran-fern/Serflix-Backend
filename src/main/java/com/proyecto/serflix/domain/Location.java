@@ -34,6 +34,16 @@ public class Location implements Serializable {
     @JsonIgnore
     private Set<Request> requests = new HashSet<>();
 
+    public Location(){
+
+    }
+
+    public Location(String city, String state, String country) {
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
+
     public Long getId() {
         return id;
     }

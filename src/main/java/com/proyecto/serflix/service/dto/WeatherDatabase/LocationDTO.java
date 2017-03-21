@@ -34,6 +34,7 @@ public class LocationDTO {
     }
 
 
+
     public String getCoordinates(){
         return this.latitude+","+this.longitude;
     }

@@ -1,5 +1,6 @@
 package com.proyecto.serflix.service.MapsAPI;
 
+import com.proyecto.serflix.domain.Location;
 import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
 import com.proyecto.serflix.service.dto.MovieDatabase.GenreList;
 import com.proyecto.serflix.service.dto.MovieDatabase.KeywordList;
@@ -24,7 +25,7 @@ public interface MapsDTORepository {
 
     @GET("geocode/json")
     Call<AddressDTO> geocode(@Query("latlng") String latlng, @Query("api_key") String apiKey);
-
+    Call<Location> coordinates(@Query("latlng") String latlng, @Query("api_key") String apiKey);
     public static String url = "https://maps.googleapis.com/maps/api/";
     public static final Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(url)
