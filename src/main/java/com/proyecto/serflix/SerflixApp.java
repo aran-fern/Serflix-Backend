@@ -107,8 +107,5 @@ public class SerflixApp {
         RequestService rs = new RequestService();
         Request r = rs.buildRequest(rdto);
         System.out.println(r);
-
-
-
     }
 }

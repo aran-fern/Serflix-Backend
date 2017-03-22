@@ -2,23 +2,21 @@ package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.proyecto.serflix.domain.Request;
-
 import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.service.MapsAPI.MapsDTOService;
+import com.proyecto.serflix.service.RequestService;
 import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
-import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
 import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
+import com.proyecto.serflix.web.rest.dto.RequestDTO;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.xml.bind.SchemaOutputResolver;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -43,6 +41,9 @@ public class RequestResource {
     @Inject
     private RequestRepository requestRepository;
 
+    @Inject
+    private RequestService requestService;
+
     /**
      * POST  /requests : Create a new request.
      *
@@ -57,6 +58,17 @@ public class RequestResource {
         if (request.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("request", "idexists", "A new request cannot already have an ID")).body(null);
         }
+        Request result = requestRepository.save(request);
+        return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("request", result.getId().toString()))
+            .body(result);
+    }
+
+    @PostMapping("/newrequest")
+    @Timed
+    public ResponseEntity<Request> createNewRequest(@RequestBody RequestDTO rdto) throws URISyntaxException {
+        log.debug("REST request to save Request : {}", rdto);
+        Request request = requestService.buildRequest(rdto);
         Request result = requestRepository.save(request);
         return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("request", result.getId().toString()))
