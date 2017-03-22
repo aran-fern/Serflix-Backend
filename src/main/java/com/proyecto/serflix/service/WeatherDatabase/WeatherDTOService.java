@@ -3,12 +3,16 @@ package com.proyecto.serflix.service.WeatherDatabase;
 
 import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.enumeration.Weather;
+import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
 import com.proyecto.serflix.service.dto.WeatherDatabase.Currently;
 import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.time.Instant;
+import java.util.Date;
 
 @Service
 public class WeatherDTOService {
@@ -36,6 +40,37 @@ public class WeatherDTOService {
         return forecast;
     }
 
+    public Forecast getHourWeather(String location){
+        Forecast forecast = new Forecast();
+        WeatherData weatherData = null;
+        Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
+        try{
+            weatherData = weatherDataCall.execute().body();
+            forecast.setWeather(getWeatherFromIcon(weatherData.getHourly().getData().get(0).getIcon().toString()));
+            forecast.setTemperature(weatherData.getHourly().getData().get(0).getTemperature());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return forecast;
+    }
+
+    public Forecast getDayWeather(String location){
+        Forecast forecast = new Forecast();
+        WeatherData weatherData = null;
+        Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
+        try{
+            weatherData = weatherDataCall.execute().body();
+            forecast.setWeather(getWeatherFromIcon(weatherData.getDaily().getData().get(7).getIcon().toString()));
+            double avgTemperature = (weatherData.getDaily().getData().get(7).getTemperatureMax()
+                + weatherData.getDaily().getData().get(7).getTemperatureMin()) / 2;
+            forecast.setTemperature(avgTemperature);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return forecast;
+    }
+
+    //Do not delete
     public WeatherData getWeatherData(String location) {
         WeatherData weatherData = null;
         Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
@@ -45,6 +80,11 @@ public class WeatherDTOService {
             e.printStackTrace();
         }
         return weatherData;
+    }
+
+    public long getDateLongFormat(Date date){
+        long unixTimestamp = date.getTime();
+        return unixTimestamp;
     }
 
     public Weather getWeatherFromIcon(String icon) {

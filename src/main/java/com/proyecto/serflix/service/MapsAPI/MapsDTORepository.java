@@ -25,7 +25,6 @@ public interface MapsDTORepository {
 
     @GET("geocode/json")
     Call<AddressDTO> geocode(@Query("latlng") String latlng, @Query("api_key") String apiKey);
-    Call<Location> coordinates(@Query("latlng") String latlng, @Query("api_key") String apiKey);
     public static String url = "https://maps.googleapis.com/maps/api/";
     public static final Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(url)
