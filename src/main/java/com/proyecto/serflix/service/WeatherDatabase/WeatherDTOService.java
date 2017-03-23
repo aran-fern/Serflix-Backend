@@ -3,15 +3,12 @@ package com.proyecto.serflix.service.WeatherDatabase;
 
 import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.enumeration.Weather;
-import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
 import com.proyecto.serflix.service.dto.WeatherDatabase.Currently;
 import com.proyecto.serflix.service.dto.WeatherDatabase.WeatherData;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.time.Instant;
 import java.util.Date;
 
 @Service
@@ -20,9 +17,6 @@ public class WeatherDTOService {
     static WeatherDTORepository apiService = WeatherDTORepository.retrofit.create(WeatherDTORepository.class);
 
     //https://api.darksky.net/forecast/b663aac760fab18d52b433a1d2c84a5e/37.8267,-122.4233?exclude=minutely,flags
-
-    //TODO
-    //Crear getCurrentWeather, getHourWeather, getDayWeather (Forecast)
 
     public Forecast getCurrentForecast(String location) {
         Forecast forecast = new Forecast();
@@ -40,30 +34,15 @@ public class WeatherDTOService {
         return forecast;
     }
 
-    public Forecast getHourWeather(String location){
+    public Forecast getHourDayWeather(String location, Date date){
+        long unixdate = getDateLongFormat(date);
         Forecast forecast = new Forecast();
         WeatherData weatherData = null;
-        Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
+        Call<WeatherData> weatherDataCall = apiService.getWeatherDataTime(apiKey, location, unixdate);
         try{
             weatherData = weatherDataCall.execute().body();
-            forecast.setWeather(getWeatherFromIcon(weatherData.getHourly().getData().get(0).getIcon().toString()));
-            forecast.setTemperature(weatherData.getHourly().getData().get(0).getTemperature());
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-        return forecast;
-    }
-
-    public Forecast getDayWeather(String location){
-        Forecast forecast = new Forecast();
-        WeatherData weatherData = null;
-        Call<WeatherData> weatherDataCall = apiService.getWeatherData(apiKey, location);
-        try{
-            weatherData = weatherDataCall.execute().body();
-            forecast.setWeather(getWeatherFromIcon(weatherData.getDaily().getData().get(7).getIcon().toString()));
-            double avgTemperature = (weatherData.getDaily().getData().get(7).getTemperatureMax()
-                + weatherData.getDaily().getData().get(7).getTemperatureMin()) / 2;
-            forecast.setTemperature(avgTemperature);
+            forecast.setWeather(getWeatherFromIcon(weatherData.getCurrently().getIcon().toString()));
+            forecast.setTemperature(weatherData.getCurrently().getTemperature());
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,7 +62,7 @@ public class WeatherDTOService {
     }
 
     public long getDateLongFormat(Date date){
-        long unixTimestamp = date.getTime();
+        long unixTimestamp = date.getTime()/1000;
         return unixTimestamp;
     }
 
