@@ -3,10 +3,15 @@ package com.proyecto.serflix;
 import com.proyecto.serflix.config.Constants;
 import com.proyecto.serflix.config.DefaultProfileUtil;
 import com.proyecto.serflix.config.JHipsterProperties;
+import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.Movie;
+import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
+import com.proyecto.serflix.service.RequestService;
+import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
+import com.proyecto.serflix.web.rest.dto.RequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -22,8 +27,11 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @ComponentScan
@@ -91,12 +99,35 @@ public class SerflixApp {
         System.out.println("Movie(Domain): ");
         System.out.println(movieDomain);
 
+
 //        Prueba para obtener Weather
 //        WeatherDTOService weatherDTOService = new WeatherDTOService();
 //        LocationDTO locationDTO = new LocationDTO(37.8267,-122.4233);
 //        WeatherData weatherData = weatherDTOService.getWeatherData("41.479743, 1.983931");
 //        System.out.println("Weather in Castellbisbal.");
 //        System.out.println(weatherData);
+
+//        RequestDTO rdto = new RequestDTO();
+//
+//
+//        RequestService rs = new RequestService();
+//        Request r = rs.buildRequest(rdto);
+//        System.out.println(r);
+
+        //Tiempo Castellbispaaaass
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        String dateInString = "24-03-2017 18:00:00";
+        try {
+            Date date = sdf.parse(dateInString);
+            WeatherDTOService weatherDTOService = new WeatherDTOService();
+            Forecast forecast = new Forecast();
+            forecast = weatherDTOService.getHourDayWeather("41.480329, 1.983589", date);
+            System.out.println(forecast);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

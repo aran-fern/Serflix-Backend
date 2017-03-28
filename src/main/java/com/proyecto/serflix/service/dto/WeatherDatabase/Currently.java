@@ -21,10 +21,10 @@ public class Currently {
     private Integer nearestStormBearing;
     @SerializedName("precipIntensity")
     @Expose
-    private Integer precipIntensity;
+    private Double precipIntensity;
     @SerializedName("precipProbability")
     @Expose
-    private Integer precipProbability;
+    private Double precipProbability;
     @SerializedName("temperature")
     @Expose
     private Double temperature;
@@ -96,19 +96,19 @@ public class Currently {
         this.nearestStormBearing = nearestStormBearing;
     }
 
-    public Integer getPrecipIntensity() {
+    public double getPrecipIntensity() {
         return precipIntensity;
     }
 
-    public void setPrecipIntensity(Integer precipIntensity) {
+    public void setPrecipIntensity(double precipIntensity) {
         this.precipIntensity = precipIntensity;
     }
 
-    public Integer getPrecipProbability() {
+    public double getPrecipProbability() {
         return precipProbability;
     }
 
-    public void setPrecipProbability(Integer precipProbability) {
+    public void setPrecipProbability(double precipProbability) {
         this.precipProbability = precipProbability;
     }
 
