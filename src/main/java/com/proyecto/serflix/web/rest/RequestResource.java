@@ -68,8 +68,7 @@ public class RequestResource {
     @Timed
     public ResponseEntity<Request> createNewRequest(@RequestBody RequestDTO rdto) throws URISyntaxException {
         log.debug("REST request to save Request : {}", rdto);
-        Request request = requestService.buildRequest(rdto);
-        Request result = requestRepository.save(request);
+        Request result = requestRepository.save(requestService.buildRequest(rdto));
         return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("request", result.getId().toString()))
             .body(result);

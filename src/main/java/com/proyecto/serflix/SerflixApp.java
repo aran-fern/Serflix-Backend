@@ -4,12 +4,9 @@ import com.proyecto.serflix.config.Constants;
 import com.proyecto.serflix.config.DefaultProfileUtil;
 import com.proyecto.serflix.config.JHipsterProperties;
 import com.proyecto.serflix.domain.Movie;
-import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
-import com.proyecto.serflix.service.RequestService;
 import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
-import com.proyecto.serflix.web.rest.dto.RequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -101,11 +98,5 @@ public class SerflixApp {
 //        System.out.println("Weather in Castellbisbal.");
 //        System.out.println(weatherData);
 
-        RequestDTO rdto = new RequestDTO();
-
-
-        RequestService rs = new RequestService();
-        Request r = rs.buildRequest(rdto);
-        System.out.println(r);
     }
 }

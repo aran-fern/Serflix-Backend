@@ -6,6 +6,8 @@ import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.domain.User;
 import com.proyecto.serflix.domain.enumeration.Company;
 import com.proyecto.serflix.domain.enumeration.Type;
+import com.proyecto.serflix.repository.ForecastRepository;
+import com.proyecto.serflix.repository.LocationRepository;
 import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.repository.UserRepository;
 import com.proyecto.serflix.security.SecurityUtils;
@@ -16,8 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,27 +40,54 @@ public class RequestService {
     @Autowired
     private WeatherDTOService weatherDTOService;
 
-    public Request buildRequest(RequestDTO requestFromAndroid){
-        //!!!!!!!!!!FALTA!!!!!!!!!
-        //Get Location del servicio
-        Location location = mapsDTOService.getLocation(requestFromAndroid.getLocation().getCoordinates());
-        //
+    @Autowired
+    private LocationRepository locationRepository;
 
+    @Autowired
+    private ForecastRepository forecastRepository;
+
+    public Request buildRequest(RequestDTO requestFromAndroid){
+
+        Request request = new Request();
+        requestRepository.save(request);
         Set<Forecast> forecasts = new HashSet<>();
+        String locationFromAndroid = requestFromAndroid.getLocation();
+        Location location = mapsDTOService.getLocation(locationFromAndroid);
+        locationRepository.save(location);
         Type type = requestFromAndroid.getType();
         String name = type+" recommendation from "+requestFromAndroid.getCreationDate();
         Company company = requestFromAndroid.getCompany();
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a");
+        String viewDateStr = requestFromAndroid.getViewDate();
+        String creationDateStr = requestFromAndroid.getCreationDate();
+        Date viewDateD = new Date();
+        Date creationDateD = new Date();
+        try {
+            viewDateD = formatter.parse(viewDateStr);
+            creationDateD = formatter.parse(creationDateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         ZonedDateTime viewDate =
-            ZonedDateTime.ofInstant(requestFromAndroid.getViewDate().toInstant(), ZoneId.systemDefault());
+            ZonedDateTime.ofInstant(viewDateD.toInstant(), ZoneId.systemDefault());
         ZonedDateTime creationDate =
-            ZonedDateTime.ofInstant(requestFromAndroid.getCreationDate().toInstant(), ZoneId.systemDefault());
+            ZonedDateTime.ofInstant(creationDateD.toInstant(), ZoneId.systemDefault());
         User userRequester = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get();
         if (viewDate.isBefore(ZonedDateTime.now().plusHours(3))){
-            Forecast currentForecast = weatherDTOService.getCurrentForecast(requestFromAndroid.getLocation().getCoordinates());
+            Forecast currentForecast = weatherDTOService.getCurrentForecast(requestFromAndroid.getLocation());
+            currentForecast.setRequest(request);
+            //Save forecast
+            forecastRepository.save(currentForecast);
             forecasts.add(currentForecast);
         }
-
-        Request request = new Request(type, name, viewDate, creationDate, company, userRequester, location, forecasts);
+        request.setType(type);
+        request.setName(name);
+        request.setViewDate(viewDate);
+        request.setCreationDate(creationDate);
+        request.setCompany(company);
+        request.setUserRequester(userRequester);
+        request.setLocation(location);
+        request.setForecasts(forecasts);
         return request;
     }
 }

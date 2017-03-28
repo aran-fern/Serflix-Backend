@@ -2,26 +2,20 @@ package com.proyecto.serflix.web.rest.dto;
 
 import com.proyecto.serflix.domain.enumeration.Company;
 import com.proyecto.serflix.domain.enumeration.Type;
-import com.proyecto.serflix.service.dto.WeatherDatabase.LocationDTO;
-
-import java.util.Date;
 
 public class RequestDTO {
     private Type type;
-    private Date viewDate;
-    private Date creationDate;
+    private String viewDate;
+    private String creationDate;
     private Company company;
 
-    private UserTokenDTO userRequester;
+    private String location;
 
-    private LocationDTO location;
-
-    public RequestDTO(Type type, Date viewDate, Date creationDate, Company company, UserTokenDTO userRequester, LocationDTO location) {
+    public RequestDTO(Type type, String viewDate, String creationDate, Company company, String location) {
         this.type = type;
         this.viewDate = viewDate;
         this.creationDate = creationDate;
         this.company = company;
-        this.userRequester = userRequester;
         this.location = location;
     }
 
@@ -36,19 +30,19 @@ public class RequestDTO {
         this.type = type;
     }
 
-    public Date getViewDate() {
+    public String getViewDate() {
         return viewDate;
     }
 
-    public void setViewDate(Date viewDate) {
+    public void setViewDate(String viewDate) {
         this.viewDate = viewDate;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -60,21 +54,14 @@ public class RequestDTO {
         this.company = company;
     }
 
-    public UserTokenDTO getUserRequester() {
-        return userRequester;
-    }
-
-    public void setUserRequester(UserTokenDTO userRequester) {
-        this.userRequester = userRequester;
-    }
-
-    public LocationDTO getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(LocationDTO location) {
+    public void setLocation(String location) {
         this.location = location;
     }
+
 
     @Override
     public String toString() {
@@ -83,7 +70,6 @@ public class RequestDTO {
             ", viewDate=" + viewDate +
             ", creationDate=" + creationDate +
             ", company=" + company +
-            ", userRequester=" + userRequester +
             ", location=" + location +
             '}';
     }
