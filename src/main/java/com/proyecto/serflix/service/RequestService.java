@@ -56,6 +56,7 @@ public class RequestService {
         locationRepository.save(location);
         Type type = requestFromAndroid.getType();
         String name = type+" recommendation from "+requestFromAndroid.getCreationDate();
+
         Company company = requestFromAndroid.getCompany();
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a");
         String viewDateStr = requestFromAndroid.getViewDate();

@@ -114,7 +114,7 @@ public class RequestResource {
         return requests;
     }
 
-    @GetMapping("/requests/{id}/recommendations/movie")
+    @GetMapping("/requests/{id}/recommendations")
     @Timed
     public List<MovieRecomendation> getMovieRecommendation(@PathVariable Long requestId) {
         log.debug("REST request to get movie recommendation");
