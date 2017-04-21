@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -58,7 +59,7 @@ public class RequestService {
         String name = type+" recommendation from "+requestFromAndroid.getCreationDate();
 
         Company company = requestFromAndroid.getCompany();
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a");
+        SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss a", Locale.ENGLISH);
         String viewDateStr = requestFromAndroid.getViewDate();
         String creationDateStr = requestFromAndroid.getCreationDate();
         Date viewDateD = new Date();

@@ -7,6 +7,7 @@ import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.service.MapsAPI.MapsDTOService;
+import com.proyecto.serflix.service.RecommendationEngine;
 import com.proyecto.serflix.service.RequestService;
 import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MapsAPI.AddressDTO;
@@ -37,6 +38,9 @@ public class RequestResource {
 
     @Inject
     private MapsDTOService mapsDTOService;
+
+    @Inject
+    private RecommendationEngine recommendationEngine;
 
     @Inject
     private WeatherDTOService weatherDTOService;
@@ -78,6 +82,7 @@ public class RequestResource {
     public ResponseEntity<Request> createNewRequest(@RequestBody RequestDTO rdto) throws URISyntaxException {
         log.debug("REST request to save Request : {}", rdto);
         Request result = requestRepository.save(requestService.buildRequest(rdto));
+        recommendationEngine.generateMovieRecommendations(result);
         return ResponseEntity.created(new URI("/api/requests/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("request", result.getId().toString()))
             .body(result);
