@@ -2,7 +2,6 @@ package com.proyecto.serflix.service.dto.MovieDatabase;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.proyecto.serflix.domain.Movie;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ public class MovieDTOList {
     private Integer page;
     @SerializedName("results")
     @Expose
-    private List<Movie> results = null;
+    private List<MovieDTO> results = null;
     @SerializedName("total_results")
     @Expose
     private Integer totalResults;
@@ -29,11 +28,11 @@ public class MovieDTOList {
         this.page = page;
     }
 
-    public List<Movie> getResults() {
+    public List<MovieDTO> getResults() {
         return results;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(List<MovieDTO> results) {
         this.results = results;
     }
 
@@ -51,5 +50,9 @@ public class MovieDTOList {
 
     public void setTotalPages(Integer totalPages) {
         this.totalPages = totalPages;
+    }
+
+    public List<MovieDTO> getMoviesDTO() {
+        return results;
     }
 }

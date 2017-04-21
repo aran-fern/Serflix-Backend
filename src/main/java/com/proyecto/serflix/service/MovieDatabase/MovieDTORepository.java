@@ -13,19 +13,22 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
 public interface MovieDTORepository {
     @GET("movie/top_rated")
-    Call<MovieDTOList> getTopRatedMovies(
-        @Query("api_key") String apiKey);
+    Call<MovieDTOList> getTopRatedMovies(@Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}/keywords")
     Call<KeywordList> getMovieKeywords(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}")
     Call<MovieDTO> getMovie(@Path("movie_id") int id, @Query("api_key") String apiKey);
+
+    @GET("movie/popular")
+    Call<MovieDTOList> getMostPopular(@Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}")
     Call<MovieDTO> getMovieInLang(@Path("movie_id") int id, @QueryMap Map<String, String> options);

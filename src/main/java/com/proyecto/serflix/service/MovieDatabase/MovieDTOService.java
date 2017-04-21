@@ -1,10 +1,7 @@
 package com.proyecto.serflix.service.MovieDatabase;
 
 import com.proyecto.serflix.domain.Movie;
-import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
-import com.proyecto.serflix.service.dto.MovieDatabase.GenreList;
-import com.proyecto.serflix.service.dto.MovieDatabase.KeywordList;
-import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
+import com.proyecto.serflix.service.dto.MovieDatabase.*;
 import javassist.compiler.ast.Keyword;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
@@ -40,6 +37,19 @@ public class MovieDTOService {
         }
         return moviesList;
     }*/
+
+    public static List<MovieDTO> getMostPopular(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getMostPopular(apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
+
+
     public static List<Keyword> getMovieKeywordS(int id){
         List<Keyword> keyWordsList = null;
         Call<KeywordList> callKeyWords = apiService.getMovieKeywords(id,apiKey);

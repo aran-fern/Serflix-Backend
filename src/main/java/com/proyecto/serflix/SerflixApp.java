@@ -4,14 +4,9 @@ import com.proyecto.serflix.config.Constants;
 import com.proyecto.serflix.config.DefaultProfileUtil;
 import com.proyecto.serflix.config.JHipsterProperties;
 import com.proyecto.serflix.domain.Forecast;
-import com.proyecto.serflix.domain.Movie;
-import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
-import com.proyecto.serflix.service.RequestService;
 import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
-import com.proyecto.serflix.service.dto.MovieDatabase.Genre;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
-import com.proyecto.serflix.web.rest.dto.RequestDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -83,8 +78,8 @@ public class SerflixApp {
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"));
-        //Prueba pelicula
         MovieDTOService movieDTOService = new MovieDTOService();
+       /* //Prueba pelicula
         MovieDTO movie = movieDTOService.getMovie(274870);
         System.out.println("Movie: ");
         System.out.println(movie);
@@ -97,7 +92,13 @@ public class SerflixApp {
         //Prueba obtener Movie(Domain) from Movie(DTO)
         Movie movieDomain = movieDTOService.getMovieFromDto(movie);
         System.out.println("Movie(Domain): ");
-        System.out.println(movieDomain);
+        System.out.println(movieDomain);*/
+
+
+        //Prueba lista de getMostPopular
+        List<MovieDTO> listaMostPopular = movieDTOService.getMostPopular();
+        System.out.println("Most Popular: ");
+        System.out.println(listaMostPopular);
 
 
 //        Prueba para obtener Weather
