@@ -42,6 +42,17 @@ public class Movie implements Serializable {
     public Movie() {
     }
 
+    public Movie(String name, Long idExternalApi, String poster, String cast, String tags, String description, String year) {
+        this.name = name;
+        this.idExternalApi = idExternalApi;
+        this.movieRecomendations = movieRecomendations;
+        this.poster = poster;
+        this.cast = cast;
+        this.tags = tags;
+        this.description = description;
+        this.year = year;
+    }
+
     public Movie(String name, Long idExternalApi) {
         this.name = name;
         this.idExternalApi = idExternalApi;

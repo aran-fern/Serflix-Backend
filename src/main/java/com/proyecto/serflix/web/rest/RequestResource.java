@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
+import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.service.MapsAPI.MapsDTOService;
 import com.proyecto.serflix.service.RequestService;
@@ -42,6 +43,9 @@ public class RequestResource {
 
     @Inject
     private RequestRepository requestRepository;
+
+    @Inject
+    private MovieRepository movieRepository;
 
     @Inject
     private RequestService requestService;
@@ -116,9 +120,11 @@ public class RequestResource {
 
     @GetMapping("/requests/{id}/recommendations")
     @Timed
-    public List<MovieRecomendation> getMovieRecommendation(@PathVariable Long requestId) {
+    public List<MovieRecomendation> getRecommendationsForRequest(@PathVariable Long id) {
         log.debug("REST request to get movie recommendation");
-        Request request = requestRepository.findOne(requestId);
+        //Request request = requestRepository.findOne(requestId);
+        //List<MovieRecomendation> recommendations = movieRecomendationRepository.findByRequestIs(request);
+        Request request = requestRepository.findOne(id);
         List<MovieRecomendation> recommendations = movieRecomendationRepository.findByRequestIs(request);
         return recommendations;
     }

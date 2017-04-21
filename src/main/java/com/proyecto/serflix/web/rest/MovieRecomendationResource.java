@@ -93,10 +93,7 @@ public class MovieRecomendationResource {
     @Timed
     public ResponseEntity<MovieRecomendation> getMovieRecomendation(@PathVariable Long id) {
         log.debug("REST request to get MovieRecomendation : {}", id);
-        //ESTA ES UNA PRUEBA, NO ES UNA SRECOMENDACION REAL
-        MovieRecomendation movieRecomendation =
-            new MovieRecomendation(null, null, null ,null);
-        movieRecomendation.setId(Long.valueOf(999));
+        MovieRecomendation movieRecomendation = movieRecomendationRepository.findOne(id);
         return Optional.ofNullable(movieRecomendation)
             .map(result -> new ResponseEntity<>(
                 result,
