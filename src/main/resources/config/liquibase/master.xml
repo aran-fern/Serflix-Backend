@@ -22,4 +22,31 @@
     <include file="classpath:config/liquibase/changelog/20170216194228_added_entity_constraints_MovieRecomendation.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170216194229_added_entity_constraints_SerieRecomendation.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+
+
+    <changeSet author="Nando (generated)" id="1492792855765-1">
+        <addColumn tableName="movie">
+            <column name="cast" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Nando (generated)" id="1492792855765-2">
+        <addColumn tableName="movie">
+            <column name="description" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Nando (generated)" id="1492792855765-3">
+        <addColumn tableName="movie">
+            <column name="poster" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Nando (generated)" id="1492792855765-4">
+        <addColumn tableName="movie">
+            <column name="tags" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Nando (generated)" id="1492792855765-5">
+        <addColumn tableName="movie">
+            <column name="year" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

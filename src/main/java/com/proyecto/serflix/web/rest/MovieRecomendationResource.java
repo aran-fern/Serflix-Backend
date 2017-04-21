@@ -2,12 +2,10 @@ package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.proyecto.serflix.domain.MovieRecomendation;
-
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ import java.util.Optional;
 public class MovieRecomendationResource {
 
     private final Logger log = LoggerFactory.getLogger(MovieRecomendationResource.class);
-        
+
     @Inject
     private MovieRecomendationRepository movieRecomendationRepository;
 
@@ -95,7 +93,10 @@ public class MovieRecomendationResource {
     @Timed
     public ResponseEntity<MovieRecomendation> getMovieRecomendation(@PathVariable Long id) {
         log.debug("REST request to get MovieRecomendation : {}", id);
-        MovieRecomendation movieRecomendation = movieRecomendationRepository.findOne(id);
+        //ESTA ES UNA PRUEBA, NO ES UNA SRECOMENDACION REAL
+        MovieRecomendation movieRecomendation =
+            new MovieRecomendation(null, null, null ,null);
+        movieRecomendation.setId(Long.valueOf(999));
         return Optional.ofNullable(movieRecomendation)
             .map(result -> new ResponseEntity<>(
                 result,
@@ -114,7 +115,8 @@ public class MovieRecomendationResource {
     public ResponseEntity<Void> deleteMovieRecomendation(@PathVariable Long id) {
         log.debug("REST request to delete MovieRecomendation : {}", id);
         movieRecomendationRepository.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("movieRecomendation", id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(
+            "movieRecomendation", id.toString())).build();
     }
 
 }

@@ -36,6 +36,16 @@ public class MovieRecomendation implements Serializable {
     @JsonIgnore
     private Set<Preferences> preferences = new HashSet<>();
 
+    public MovieRecomendation() {
+    }
+
+    public MovieRecomendation(RecomendationResult recomendationResult, Movie movieDTO, Request request, Set<Preferences> preferences) {
+        this.recomendationResult = recomendationResult;
+        this.movieDTO = movieDTO;
+        this.request = request;
+        this.preferences = preferences;
+    }
+
     public Long getId() {
         return id;
     }

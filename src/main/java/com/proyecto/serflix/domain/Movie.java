@@ -31,6 +31,14 @@ public class Movie implements Serializable {
     @JsonIgnore
     private Set<MovieRecomendation> movieRecomendations = new HashSet<>();
 
+    //Modified because missing attributes
+    private String poster;
+    private String cast;
+    private String tags;
+    private String description;
+    private String year;
+    //End of modification
+
     public Movie() {
     }
 
