@@ -23,6 +23,7 @@ public class MapsDTOService {
     public static final String apiKey = "AIzaSyBIsWoDLus9G4yQespRGvvy8_dZeOnw71c";
     static MapsDTORepository apiService = MapsDTORepository.retrofit.create(MapsDTORepository.class);
 
+    //No delete
     public AddressDTO getGeocode(String latlng){
         AddressDTO addressDTO = null;
         Call<AddressDTO> callGeocode = apiService.geocode(latlng, apiKey);
@@ -63,10 +64,4 @@ public class MapsDTOService {
         }
         return location;
     }
-
-//    public static Movie getMovieFromDto(MovieDTO d){
-//        Long id = new Long(d.getId());
-//        return new Movie(d.getTitle(), id);
-//    }
-
 }

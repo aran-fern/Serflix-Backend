@@ -27,17 +27,20 @@ public class Movie implements Serializable {
     @Column(name = "id_external_api")
     private Long idExternalApi;
 
-    @OneToMany(mappedBy = "movieDTO")
-    @JsonIgnore
-    private Set<MovieRecomendation> movieRecomendations = new HashSet<>();
-
     //Modified because missing attributes
+    @JsonIgnore(value = false)
     private String poster;
     private String cast;
     private String tags;
     private String description;
     private String year;
     //End of modification
+
+    @OneToMany(mappedBy = "movieDTO")
+    @JsonIgnore
+    private Set<MovieRecomendation> movieRecomendations = new HashSet<>();
+
+
 
     public Movie() {
     }
@@ -130,6 +133,46 @@ public class Movie implements Serializable {
             return false;
         }
         return Objects.equals(id, movie.id);
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getCast() {
+        return cast;
+    }
+
+    public void setCast(String cast) {
+        this.cast = cast;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     @Override

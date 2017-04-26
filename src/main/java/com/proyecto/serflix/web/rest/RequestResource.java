@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -79,6 +80,7 @@ public class RequestResource {
 
     @PostMapping("/newrequest")
     @Timed
+    @Transactional
     public ResponseEntity<Request> createNewRequest(@RequestBody RequestDTO rdto) throws URISyntaxException {
         log.debug("REST request to save Request : {}", rdto);
         Request result = requestRepository.save(requestService.buildRequest(rdto));
