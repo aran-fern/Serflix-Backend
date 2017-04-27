@@ -6,6 +6,7 @@ import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
+import com.proyecto.serflix.service.dto.MovieDatabase.Keyword;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class RecommendationEngine {
     @Inject
     private MovieRepository movieRepository;
 
+    @Inject
+    private MovieDTOService movieDTOService;
+
     public boolean generateMovieRecommendations(Request request){
         MovieDTOService movieDTOService = new MovieDTOService();
         List<MovieDTO> movieList = movieDTOService.getMostPopular();
@@ -30,7 +34,18 @@ public class RecommendationEngine {
             if (description.length() > 244){
                 description = description.substring(0,244);
             }
-            Movie movie = new Movie(movieDTO.getTitle(), Long.valueOf(movieDTO.getId()), movieDTO.getPosterPath(), "Cast", "Tags", description, movieDTO.getReleaseDate());
+            String tags = "";
+            List<Keyword> keyWordsList = movieDTOService.getMovieKeywords(movieDTO.getId());
+            for (int i = 0; i < 5; i++) {
+                if (keyWordsList.size() > i){
+                    if (i != 0){
+                        tags += ", "+keyWordsList.get(i).getName();
+                    }else{
+                        tags += keyWordsList.get(i).getName();
+                    }
+                }
+            }
+            Movie movie = new Movie(movieDTO.getTitle(), Long.valueOf(movieDTO.getId()), movieDTO.getPosterPath(), "Cast", tags, description, movieDTO.getReleaseDate());
             movieRepository.save(movie);
             MovieRecomendation recomendation = new MovieRecomendation(null, movie, request, null);
             movieRecomendationRepository.save(recomendation);

@@ -2,7 +2,6 @@ package com.proyecto.serflix.service.dto.MovieDatabase;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import javassist.compiler.ast.Keyword;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ public class KeywordList {
     private Integer id;
     @SerializedName("keywords")
     @Expose
-    private List<Keyword> keywords = null;
+    private List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> keywords = null;
 
     public Integer getId() {
         return id;
@@ -22,11 +21,11 @@ public class KeywordList {
         this.id = id;
     }
 
-    public List<Keyword> getKeywords() {
+    public List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(List<Keyword> keywords) {
+    public void setKeywords(List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> keywords) {
         this.keywords = keywords;
     }
 
