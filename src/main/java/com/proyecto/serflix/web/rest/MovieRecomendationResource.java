@@ -1,8 +1,14 @@
 package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
+import com.proyecto.serflix.domain.Preferences;
+import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
+import com.proyecto.serflix.repository.MovieRepository;
+import com.proyecto.serflix.repository.PreferencesRepository;
+import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +21,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing MovieRecomendation.
@@ -27,6 +34,15 @@ public class MovieRecomendationResource {
 
     @Inject
     private MovieRecomendationRepository movieRecomendationRepository;
+
+    @Inject
+    private MovieRepository movieRepository;
+
+    @Inject
+    private RequestRepository requestRepository;
+
+    @Inject
+    private PreferencesRepository preferencesRepository;
 
     /**
      * POST  /movie-recomendations : Create a new movieRecomendation.
@@ -64,6 +80,15 @@ public class MovieRecomendationResource {
         if (movieRecomendation.getId() == null) {
             return createMovieRecomendation(movieRecomendation);
         }
+        Movie movie = movieRecomendation.getMovieDTO();
+        Request request = movieRecomendation.getRequest();
+        Set<Preferences> preferencesSet = movieRecomendation.getPreferences();
+
+
+        movieRepository.save(movie);
+        requestRepository.save(request);
+        preferencesRepository.save(preferencesSet);
+
         MovieRecomendation result = movieRecomendationRepository.save(movieRecomendation);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("movieRecomendation", movieRecomendation.getId().toString()))
