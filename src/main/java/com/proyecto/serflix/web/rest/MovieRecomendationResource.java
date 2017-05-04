@@ -1,7 +1,6 @@
 package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Preferences;
 import com.proyecto.serflix.domain.Request;
@@ -9,6 +8,7 @@ import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.repository.PreferencesRepository;
 import com.proyecto.serflix.repository.RequestRepository;
+import com.proyecto.serflix.service.LearningEngine;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +43,9 @@ public class MovieRecomendationResource {
 
     @Inject
     private PreferencesRepository preferencesRepository;
+
+    @Inject
+    private LearningEngine learningEngine;
 
     /**
      * POST  /movie-recomendations : Create a new movieRecomendation.
@@ -80,16 +83,18 @@ public class MovieRecomendationResource {
         if (movieRecomendation.getId() == null) {
             return createMovieRecomendation(movieRecomendation);
         }
-        Movie movie = movieRecomendation.getMovieDTO();
         Request request = movieRecomendation.getRequest();
         Set<Preferences> preferencesSet = movieRecomendation.getPreferences();
 
-
-        movieRepository.save(movie);
+        movieRecomendation.setMovieDTO(movieRepository.findByName(movieRecomendation.getMovieDTO().getName()).get(0));
         requestRepository.save(request);
         preferencesRepository.save(preferencesSet);
 
         MovieRecomendation result = movieRecomendationRepository.save(movieRecomendation);
+
+        //Aprender
+        learningEngine.learnFromRecommendation(movieRecomendation);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("movieRecomendation", movieRecomendation.getId().toString()))
             .body(result);
