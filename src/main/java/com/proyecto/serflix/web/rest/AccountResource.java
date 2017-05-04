@@ -74,6 +74,38 @@ public class AccountResource {
         );
     }
 
+
+    @RequestMapping(value = "/register/app",
+        method = RequestMethod.POST,
+        produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+    @Timed
+    public ResponseEntity<?> registerAccountApp(@Valid @RequestBody ManagedUserVM managedUserVM, HttpServletRequest request) {
+
+        HttpHeaders textPlainHeaders = new HttpHeaders();
+        textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+
+        return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
+            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+            .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
+                .map(user -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                .orElseGet(() -> {
+                    User user = new User();
+                    if(managedUserVM.getLangKey() == null){
+                        user = userService.createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
+                            managedUserVM.getFirstName(), managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
+                            "en");
+                    }
+                    else{
+                        user = userService.createUser(managedUserVM.getLogin(), managedUserVM.getPassword(),
+                            managedUserVM.getFirstName(), managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
+                            managedUserVM.getLangKey());
+                    }
+                    activateAccount(user.getActivationKey());
+                    return new ResponseEntity<>(HttpStatus.CREATED);
+                })
+            );
+    }
+
     /**
      * GET  /activate : activate the registered user.
      *
