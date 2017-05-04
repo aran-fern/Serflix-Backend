@@ -45,8 +45,15 @@ public class RecommendationEngine {
                     }
                 }
             }
-            Movie movie = new Movie(movieDTO.getTitle(), Long.valueOf(movieDTO.getId()), movieDTO.getPosterPath(), "Cast", tags, description, movieDTO.getReleaseDate());
-            movieRepository.save(movie);
+            Movie movie;
+            if (movieRepository.findByName(movieDTO.getTitle()).size() > 0){
+                movie = movieRepository.findByName(movieDTO.getTitle()).get(0);
+
+            }else{
+                movie = new Movie(movieDTO.getTitle(), Long.valueOf(movieDTO.getId()), movieDTO.getPosterPath(), "Cast", tags, description, movieDTO.getReleaseDate());
+                movie.setIdExternalApi(Long.valueOf(movieDTO.getId()));
+                movieRepository.save(movie);
+            }
             MovieRecomendation recomendation = new MovieRecomendation(null, movie, request, null);
             movieRecomendationRepository.save(recomendation);
         }
