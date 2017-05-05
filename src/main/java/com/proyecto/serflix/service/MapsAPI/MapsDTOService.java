@@ -41,12 +41,15 @@ public class MapsDTOService {
         Call<AddressDTO> locationCall = apiService.geocode(latlng, apiKey);
         try{
             addressDTO = locationCall.execute().body();
-            location.setCountry(addressDTO
+
+            addressDTO
                 .getResults()
                 .stream()
-                .filter(result -> result.getTypes()
-                    .contains("country")).collect(Collectors.toList())
-                .get(0).getFormattedAddress());
+                .forEach(result -> result.getAddressComponents()
+                    .stream()
+                    .filter(addressComponent -> addressComponent.getTypes().contains("country"))
+                    .findFirst()
+                    .ifPresent(addressComponent -> location.setCountry(addressComponent.getLongName())));
             location.setState(addressDTO
                 .getResults()
                 .stream()

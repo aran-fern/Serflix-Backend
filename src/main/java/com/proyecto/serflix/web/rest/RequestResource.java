@@ -1,6 +1,7 @@
 package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.proyecto.serflix.domain.Location;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Request;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
@@ -154,14 +155,15 @@ public class RequestResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/requests/geocode/{latlng}")
+    @GetMapping("/requests/geocode/{latlng:.*}")
     @Timed
     public ResponseEntity<AddressDTO> getGeocodeRequest(@PathVariable String latlng) {
         log.debug("REST request to get Request : {}", latlng);
         AddressDTO addressDTO = mapsDTOService.getGeocode(latlng);
+        Location location = mapsDTOService.getLocation(latlng);
 
 
-        String country = addressDTO.
+        /*String country = addressDTO.
             getResults().
             stream().
             filter(result -> result.getTypes().
@@ -183,7 +185,7 @@ public class RequestResource {
             filter(result -> result.getTypes().
                 contains("administrative_area_level_2")).collect(Collectors.toList())
             .get(0).getFormattedAddress();
-        System.out.println(city);
+        System.out.println(city);*/
 
 
         return Optional.ofNullable(addressDTO)
