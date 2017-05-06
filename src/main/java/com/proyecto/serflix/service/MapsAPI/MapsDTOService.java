@@ -50,18 +50,25 @@ public class MapsDTOService {
                     .filter(addressComponent -> addressComponent.getTypes().contains("country"))
                     .findFirst()
                     .ifPresent(addressComponent -> location.setCountry(addressComponent.getLongName())));
-            location.setState(addressDTO
+
+            addressDTO
                 .getResults()
                 .stream()
-                .filter(result -> result.getTypes()
-                    .contains("administrative_area_level_1")).collect(Collectors.toList())
-                .get(0).getFormattedAddress());
-            location.setCity(addressDTO
+                .forEach(result -> result.getAddressComponents()
+                    .stream()
+                    .filter(addressComponent -> addressComponent.getTypes().contains("administrative_area_level_1"))
+                    .findFirst()
+                    .ifPresent(addressComponent -> location.setState(addressComponent.getLongName())));
+
+            addressDTO
                 .getResults()
                 .stream()
-                .filter(result -> result.getTypes()
-                    .contains("administrative_area_level_2")).collect(Collectors.toList())
-                .get(0).getFormattedAddress());
+                .forEach(result -> result.getAddressComponents()
+                    .stream()
+                    .filter(addressComponent -> addressComponent.getTypes().contains("administrative_area_level_2"))
+                    .findFirst()
+                    .ifPresent(addressComponent -> location.setCity(addressComponent.getLongName())));
+
         }catch (IOException e) {
             e.printStackTrace();
         }
