@@ -53,6 +53,9 @@ public class RequestService {
         requestRepository.save(request);
         Set<Forecast> forecasts = new HashSet<>();
         String locationFromAndroid = requestFromAndroid.getLocation();
+        if(locationFromAndroid.equals("") || locationFromAndroid.isEmpty() || locationFromAndroid == null){
+            locationFromAndroid = "";
+        }
         Location location = mapsDTOService.getLocation(locationFromAndroid);
         locationRepository.save(location);
         Type type = requestFromAndroid.getType();

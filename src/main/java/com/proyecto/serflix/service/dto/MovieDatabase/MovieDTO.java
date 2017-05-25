@@ -20,7 +20,7 @@ public class MovieDTO {
     private Integer budget;
     @SerializedName("genres")
     @Expose
-    private List<Genre> genres = null;
+    private List<Genre> genres;
     @SerializedName("homepage")
     @Expose
     private String homepage;

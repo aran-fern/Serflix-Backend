@@ -1,6 +1,6 @@
 package com.proyecto.serflix.service.MovieDatabase;
 
-import com.proyecto.serflix.service.dto.MovieDatabase.GenreList;
+import com.proyecto.serflix.service.dto.MovieDatabase.Credits;
 import com.proyecto.serflix.service.dto.MovieDatabase.KeywordList;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTOList;
@@ -13,7 +13,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -33,8 +32,8 @@ public interface MovieDTORepository {
     @GET("movie/{movie_id}")
     Call<MovieDTO> getMovieInLang(@Path("movie_id") int id, @QueryMap Map<String, String> options);
 
-    @GET("genre/movie/list")
-    Call<GenreList> getGenres(@Query("api_key") String apikey);
+    @GET("movie/{movie_id}/credits")
+    Call<Credits> getMovieCredits(@Path("movie_id") int id, @Query("api_key") String apiKey);
 
     public static String url = "https://api.themoviedb.org/3/";
     public static final Retrofit retrofit = new Retrofit.Builder()

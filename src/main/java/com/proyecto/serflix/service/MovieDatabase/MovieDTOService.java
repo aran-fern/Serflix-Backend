@@ -74,19 +74,20 @@ public class MovieDTOService {
         }
         return movie;
     }
-    public static List<Genre> getGenres(){
-        Call<GenreList> call = apiService.getGenres(apiKey);
-        GenreList genresList = null;
-        try {
-            genresList = call.execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return genresList.getGenres();
-    }
 
     public static Movie getMovieFromDto(MovieDTO d){
         Long id = new Long(d.getId());
         return new Movie(d.getTitle(), id);
+    }
+
+    public static Credits getMoviecredits(int id){
+        Credits credits = null;
+        Call<Credits> callCredits = apiService.getMovieCredits(id, apiKey);
+        try {
+            credits = callCredits.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return credits;
     }
 }
