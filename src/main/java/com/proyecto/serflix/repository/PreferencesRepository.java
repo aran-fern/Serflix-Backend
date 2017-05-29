@@ -22,4 +22,7 @@ public interface PreferencesRepository extends JpaRepository<Preferences,Long> {
     @Query("select preferences from Preferences preferences left join fetch preferences.movieRecomendations left join fetch preferences.serieRecomendations left join fetch preferences.requests where preferences.id =:id")
     Preferences findOneWithEagerRelationships(@Param("id") Long id);
 
+    List<Preferences> findByName(String name);
+
+
 }
