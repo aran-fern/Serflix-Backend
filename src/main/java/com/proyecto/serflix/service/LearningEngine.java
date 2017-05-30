@@ -89,24 +89,24 @@ public class LearningEngine {
                 break;
         }
 
-        List<Preferences> preferencesList = generatePreferences(points);
-        //GUARDAR EN BASE DE DATOS LAS PREFERENCIAS
-
+        generatePreferences(points);
     }
 
     public List<Preferences> generatePreferences(int points){
         List<Preferences> preferences = new ArrayList<>();
         for (String preferenceStr : preferencesStr){
             List<Preferences> preferencesList = preferencesRepository.findByName(preferenceStr);
+            Preferences p;
             if (preferencesList.size() > 0){
-                Preferences p = preferencesList.get(0);
+                p = preferencesList.get(0);
                 p.setValue(p.getValue()+points);
-                preferences.add(p);
             }else{
-                Preferences p = new Preferences();
+                p = new Preferences();
                 p.setName(preferenceStr);
                 p.setValue(points);
             }
+            preferences.add(p);
+            preferencesRepository.save(p);
         }
         return preferences;
     }
