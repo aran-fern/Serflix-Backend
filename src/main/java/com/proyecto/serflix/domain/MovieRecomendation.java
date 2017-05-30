@@ -46,6 +46,10 @@ public class MovieRecomendation implements Serializable {
         this.preferences = preferences;
     }
 
+    public MovieRecomendation(Movie movieDTO) {
+        this.movieDTO = movieDTO;
+    }
+
     public Long getId() {
         return id;
     }

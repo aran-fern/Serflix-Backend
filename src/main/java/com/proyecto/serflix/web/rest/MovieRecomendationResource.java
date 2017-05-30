@@ -9,6 +9,7 @@ import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.repository.PreferencesRepository;
 import com.proyecto.serflix.repository.RequestRepository;
 import com.proyecto.serflix.service.LearningEngine;
+import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -46,6 +48,9 @@ public class MovieRecomendationResource {
 
     @Inject
     private LearningEngine learningEngine;
+
+    @Inject
+    private MovieDTOService movieDTOService;
 
     /**
      * POST  /movie-recomendations : Create a new movieRecomendation.
@@ -129,6 +134,37 @@ public class MovieRecomendationResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/movie-recomendations/test-inicial")
+    @Timed
+    public List<MovieRecomendation> getTestInicial(@PathVariable Long id) {
+        /*
+            El resplandor
+            Titanic
+            Como Dios
+            La Jungla de cristal
+            Matchpoints
+            Ali
+            Club de la lucha
+            avatar
+            salvar soldado ryan
+            grease
+         */
+        List<MovieRecomendation> movieRecomendations = Arrays.asList(
+            new MovieRecomendation(MovieDTOService.getMovie(694).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(597).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(310).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(562).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(116).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(8489).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(550).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(19995).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(857).toMovie()),
+            new MovieRecomendation(MovieDTOService.getMovie(621).toMovie())
+        );
+
+        return movieRecomendations;
     }
 
     /**

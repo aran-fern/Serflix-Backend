@@ -171,7 +171,7 @@ public class Movie implements Serializable {
         return year;
     }
 
-    public void setYear(String year) {
+    public void  esetYear(String year) {
         this.year = year;
     }
 

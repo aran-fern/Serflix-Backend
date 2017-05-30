@@ -2,6 +2,7 @@ package com.proyecto.serflix.service.dto.MovieDatabase;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.proyecto.serflix.domain.Movie;
 
 import java.util.List;
 
@@ -330,5 +331,13 @@ public class MovieDTO {
             ", voteAverage=" + voteAverage +
             ", voteCount=" + voteCount +
             '}';
+    }
+
+    public Movie toMovie(){
+        Movie movie = new Movie();
+        movie.setName(this.getTitle());
+        movie.setDescription(this.getOverview());
+        movie.setIdExternalApi(Long.valueOf(this.getId()));
+        return movie;
     }
 }
