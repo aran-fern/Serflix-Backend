@@ -61,6 +61,17 @@ public class MovieDTOService {
         return moviesDTO;
     }
 
+    public static List<MovieDTO> getKidFilms(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getAnimationMovies(16, apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
+
     public static List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> getMovieKeywords(int id){
         List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> keyWordsList = null;
         Call<KeywordList> callKeyWords = apiService.getMovieKeywords(id,apiKey);

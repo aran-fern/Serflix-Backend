@@ -29,8 +29,11 @@ public interface MovieDTORepository {
     @GET("movie/popular")
     Call<MovieDTOList> getMostPopular(@Query("api_key") String apiKey);
 
-    @GET("/genre/{genre_id}/movies?include_adult=true")
+    @GET("genre/{genre_id}/movies?include_adult=true")
     Call<MovieDTOList> getHorrorMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
+
+    @GET("genre/{genre_id}/movies?include_adult=false")
+    Call<MovieDTOList> getAnimationMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
 
     @GET("movie/{movie_id}")
     Call<MovieDTO> getMovieInLang(@Path("movie_id") int id, @QueryMap Map<String, String> options);
@@ -43,7 +46,4 @@ public interface MovieDTORepository {
         .baseUrl(url)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
-
-    //https://api.themoviedb.org/3/genre/27/movies?api_key=e9146e088c2bfd128d974ae6fe70bdf4&language=en-US&include_adult=true
-
 }

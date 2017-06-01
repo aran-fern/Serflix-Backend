@@ -1,9 +1,9 @@
 package com.proyecto.serflix.service;
 
-import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Request;
+import com.proyecto.serflix.domain.enumeration.Company;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
@@ -25,13 +25,22 @@ public class RecommendationEngine {
     @Inject
     private MovieDTOService movieDTOService;
 
+    private List<MovieDTO> movieList;
+
     public boolean generateMovieRecommendations(Request request){
+
         MovieDTOService movieDTOService = new MovieDTOService();
 
         //CONDITION FOR HORROR FILMS
-        //CONDITION FOR KIDS FILMS
 
-        List<MovieDTO> movieList = movieDTOService.getMostPopular();
+        //"ANOTHER_USER" lo hacemos servir como si fuese con niños ya que no contemplamos otro usuario aún
+        if (request.getCompany() == Company.ANOTHER_USER){
+            movieList = movieDTOService.getKidFilms();
+        }
+        else {
+            movieList = movieDTOService.getMostPopular();
+        }
+
 
         for(MovieDTO movieDTO : movieList){
             String description = movieDTO.getOverview();
