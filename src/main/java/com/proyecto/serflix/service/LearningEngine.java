@@ -2,10 +2,14 @@ package com.proyecto.serflix.service;
 
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Preferences;
+import com.proyecto.serflix.domain.User;
 import com.proyecto.serflix.repository.PreferencesRepository;
+import com.proyecto.serflix.repository.UserRepository;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
 import com.proyecto.serflix.service.dto.MovieDatabase.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,6 +24,9 @@ public class LearningEngine {
 
     @Autowired
     private PreferencesRepository preferencesRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     private int movieId;
@@ -92,10 +99,12 @@ public class LearningEngine {
         generatePreferences(points);
     }
 
-    public List<Preferences> generatePreferences(int points){
+    public void generatePreferences(int points){
         List<Preferences> preferences = new ArrayList<>();
         for (String preferenceStr : preferencesStr){
-            List<Preferences> preferencesList = preferencesRepository.findByName(preferenceStr);
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            User u = userRepository.findByLogin(auth.getName());
+            List<Preferences> preferencesList = preferencesRepository.findByNameAndUser(preferenceStr, u);
             Preferences p;
             if (preferencesList.size() > 0){
                 p = preferencesList.get(0);
@@ -104,10 +113,10 @@ public class LearningEngine {
                 p = new Preferences();
                 p.setName(preferenceStr);
                 p.setValue(points);
+                p.setUser(u);
             }
             preferences.add(p);
             preferencesRepository.save(p);
         }
-        return preferences;
     }
 }

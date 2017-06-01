@@ -1,8 +1,9 @@
 package com.proyecto.serflix.repository;
 
 import com.proyecto.serflix.domain.Preferences;
-
-import org.springframework.data.jpa.repository.*;
+import com.proyecto.serflix.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface PreferencesRepository extends JpaRepository<Preferences,Long> {
     Preferences findOneWithEagerRelationships(@Param("id") Long id);
 
     List<Preferences> findByName(String name);
+
+    List<Preferences> findByNameAndUser(String name, User user);
 
 
 }
