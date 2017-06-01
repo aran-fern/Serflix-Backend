@@ -37,6 +37,9 @@ public class RecommendationEngine {
         if (request.getCompany() == Company.ANOTHER_USER){
             movieList = movieDTOService.getKidFilms();
         }
+        else if (request.getCompany() == Company.PARTNER){
+            movieList = movieDTOService.getRainyFilms();
+        }
         else {
             movieList = movieDTOService.getMostPopular();
         }
