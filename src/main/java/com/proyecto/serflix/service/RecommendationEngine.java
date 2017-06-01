@@ -1,5 +1,6 @@
 package com.proyecto.serflix.service;
 
+import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Request;
@@ -26,6 +27,10 @@ public class RecommendationEngine {
 
     public boolean generateMovieRecommendations(Request request){
         MovieDTOService movieDTOService = new MovieDTOService();
+
+        //CONDITION FOR HORROR FILMS
+        //CONDITION FOR KIDS FILMS
+
         List<MovieDTO> movieList = movieDTOService.getMostPopular();
 
         for(MovieDTO movieDTO : movieList){

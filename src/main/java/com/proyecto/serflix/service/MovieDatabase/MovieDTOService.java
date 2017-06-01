@@ -19,8 +19,10 @@ public class MovieDTOService {
     public static MovieDTO getMovie(int id){
         MovieDTO movie = null;
         Call<MovieDTO> callMovie = apiService.getMovie(id, apiKey);
+        System.out.println(callMovie);
         try {
             movie = callMovie.execute().body();
+            System.out.println(movie);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,6 +50,16 @@ public class MovieDTOService {
         return moviesDTO;
     }
 
+    public static List<MovieDTO> getRainyFilms(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getHorrorMovies(27, apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
 
     public static List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> getMovieKeywords(int id){
         List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> keyWordsList = null;
