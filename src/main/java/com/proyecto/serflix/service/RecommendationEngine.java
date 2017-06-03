@@ -52,8 +52,10 @@ public class RecommendationEngine {
                 }
                 break;
             case FAMILY:
+                movieList = discoverService.getFamilyMovies();
                 break;
             case FRIENDS:
+
                 break;
             case ANOTHER_USER:
                 //movieList = movieDTOService.getKidFilms();
