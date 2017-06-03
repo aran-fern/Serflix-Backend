@@ -43,12 +43,14 @@ public class RecommendationEngine {
 
         switch (request.getCompany()){
             case ALONE:
+
                 break;
             case PARTNER:
                 if (!forecast.getWeather().equals(Weather.CLEAR)){
+                    //Peliculas para un mal dia
                     movieList = movieDTOService.getRainyFilms();
                 }else{
-
+                    //Peliculas para un dia soleado
                 }
                 break;
             case FAMILY:
@@ -58,7 +60,6 @@ public class RecommendationEngine {
 
                 break;
             case ANOTHER_USER:
-                //movieList = movieDTOService.getKidFilms();
                 //"ANOTHER_USER" lo hacemos servir como si fuese con niños ya que no contemplamos otro usuario aún
                 movieList = discoverService.getKidsMovies();
                 break;
