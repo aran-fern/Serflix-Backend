@@ -4,9 +4,10 @@ import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Request;
-import com.proyecto.serflix.domain.enumeration.Company;
+import com.proyecto.serflix.domain.enumeration.Weather;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
+import com.proyecto.serflix.service.MovieDatabase.DiscoverService;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
 import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MovieDatabase.Keyword;
@@ -30,6 +31,9 @@ public class RecommendationEngine {
     @Inject
     private WeatherDTOService weatherDTOService;
 
+    @Inject
+    private DiscoverService discoverService;
+
     private List<MovieDTO> movieList;
 
     public boolean generateMovieRecommendations(Request request){
@@ -37,17 +41,28 @@ public class RecommendationEngine {
         MovieDTOService movieDTOService = new MovieDTOService();
         Forecast forecast = weatherDTOService.getCurrentForecast(request.getLocation().getLatLon());
 
-        //CONDITION FOR HORROR FILMS
+        switch (request.getCompany()){
+            case ALONE:
+                break;
+            case PARTNER:
+                if (!forecast.getWeather().equals(Weather.CLEAR)){
+                    movieList = movieDTOService.getRainyFilms();
+                }else{
 
-        //"ANOTHER_USER" lo hacemos servir como si fuese con niños ya que no contemplamos otro usuario aún
-        if (request.getCompany() == Company.ANOTHER_USER){
-            movieList = movieDTOService.getKidFilms();
-        }
-        else if (request.getCompany() == Company.PARTNER){
-            movieList = movieDTOService.getRainyFilms();
-        }
-        else {
-            movieList = movieDTOService.getMostPopular();
+                }
+                break;
+            case FAMILY:
+                break;
+            case FRIENDS:
+                break;
+            case ANOTHER_USER:
+                //movieList = movieDTOService.getKidFilms();
+                //"ANOTHER_USER" lo hacemos servir como si fuese con niños ya que no contemplamos otro usuario aún
+                movieList = discoverService.getKidsMovies();
+                break;
+            default:
+                movieList = movieDTOService.getMostPopular();
+                break;
         }
 
 
@@ -58,13 +73,17 @@ public class RecommendationEngine {
                 description = description.substring(0,244);
             }
             String tags = "";
-            List<Keyword> keyWordsList = movieDTOService.getMovieKeywords(movieDTO.getId());
-            for (int i = 0; i < 5; i++) {
-                if (keyWordsList.size() > i){
-                    if (i != 0){
-                        tags += ", "+keyWordsList.get(i).getName();
-                    }else{
-                        tags += keyWordsList.get(i).getName();
+            if (movieDTO.getId() != null){
+                List<Keyword> keyWordsList = movieDTOService.getMovieKeywords(movieDTO.getId());
+
+            if (keyWordsList != null && keyWordsList.size() > 0){
+                for (int i = 0; i < 5; i++) {
+                    if (keyWordsList.size() > i){
+                        if (i != 0){
+                            tags += ", "+keyWordsList.get(i).getName();
+                        }else{
+                            tags += keyWordsList.get(i).getName();
+                        }
                     }
                 }
             }
@@ -79,6 +98,7 @@ public class RecommendationEngine {
             }
             MovieRecomendation recomendation = new MovieRecomendation(null, movie, request, null);
             movieRecomendationRepository.save(recomendation);
+            }
         }
         return true;
     }

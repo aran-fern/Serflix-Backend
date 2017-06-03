@@ -1,7 +1,10 @@
 package com.proyecto.serflix.service.MovieDatabase;
 
 import com.proyecto.serflix.domain.Movie;
-import com.proyecto.serflix.service.dto.MovieDatabase.*;
+import com.proyecto.serflix.service.dto.MovieDatabase.Credits;
+import com.proyecto.serflix.service.dto.MovieDatabase.KeywordList;
+import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
+import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTOList;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
@@ -76,8 +79,13 @@ public class MovieDTOService {
         List<com.proyecto.serflix.service.dto.MovieDatabase.Keyword> keyWordsList = null;
         Call<KeywordList> callKeyWords = apiService.getMovieKeywords(id,apiKey);
         try {
-            keyWordsList = callKeyWords.execute().body().getKeywords();
+            KeywordList keywordListBody = callKeyWords.execute().body();
+            if (keywordListBody != null && keywordListBody.getKeywords().size() > 0){
+                keyWordsList = keywordListBody.getKeywords();
+            }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
             e.printStackTrace();
         }
         return keyWordsList;
