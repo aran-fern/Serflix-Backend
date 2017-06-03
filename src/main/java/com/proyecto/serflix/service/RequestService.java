@@ -91,6 +91,7 @@ public class RequestService {
         request.setCreationDate(creationDate);
         request.setCompany(company);
         request.setUserRequester(userRequester);
+        location.setLatLon(requestFromAndroid.getLocation());
         request.setLocation(location);
         request.setForecasts(forecasts);
         return request;

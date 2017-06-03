@@ -1,5 +1,6 @@
 package com.proyecto.serflix.service;
 
+import com.proyecto.serflix.domain.Forecast;
 import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Request;
@@ -7,6 +8,7 @@ import com.proyecto.serflix.domain.enumeration.Company;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
+import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
 import com.proyecto.serflix.service.dto.MovieDatabase.Keyword;
 import com.proyecto.serflix.service.dto.MovieDatabase.MovieDTO;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,15 @@ public class RecommendationEngine {
     @Inject
     private MovieDTOService movieDTOService;
 
+    @Inject
+    private WeatherDTOService weatherDTOService;
+
     private List<MovieDTO> movieList;
 
     public boolean generateMovieRecommendations(Request request){
 
         MovieDTOService movieDTOService = new MovieDTOService();
+        Forecast forecast = weatherDTOService.getCurrentForecast(request.getLocation().getLatLon());
 
         //CONDITION FOR HORROR FILMS
 

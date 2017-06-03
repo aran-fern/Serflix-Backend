@@ -34,6 +34,9 @@ public class Location implements Serializable {
     @JsonIgnore
     private Set<Request> requests = new HashSet<>();
 
+    @Transient
+    private String latLon;
+
     public Location(){
 
     }
@@ -129,6 +132,14 @@ public class Location implements Serializable {
             return false;
         }
         return Objects.equals(id, location.id);
+    }
+
+    public String getLatLon() {
+        return latLon;
+    }
+
+    public void setLatLon(String latLon) {
+        this.latLon = latLon;
     }
 
     @Override
