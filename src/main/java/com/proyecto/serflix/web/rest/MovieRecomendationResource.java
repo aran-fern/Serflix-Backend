@@ -5,6 +5,7 @@ import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Preferences;
 import com.proyecto.serflix.domain.Request;
+import com.proyecto.serflix.domain.enumeration.Company;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
 import com.proyecto.serflix.repository.PreferencesRepository;
@@ -21,7 +22,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing MovieRecomendation.
@@ -149,73 +154,82 @@ public class MovieRecomendationResource {
             salvar soldado ryan
             grease
          */
+        Request request = new Request();
+        request.setCompany(Company.ALONE);
+        request.setCreationDate(ZonedDateTime.now());
+        request.setName("Test inicial");
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        //User u = userRepository.findByLogin(auth.getName());
+        //request.setUserRequester(u);
+        request.setViewDate(ZonedDateTime.now());
+        requestRepository.save(request);
 
         List<MovieRecomendation> movieRecomendations = new ArrayList<>();
         Movie movie = MovieDTOService.getMovie(694).toMovie();
         movieRepository.save(movie);
-        MovieRecomendation movieRecomendation = new MovieRecomendation(movie);
+        MovieRecomendation movieRecomendation = new MovieRecomendation(movie, request);
         movieRecomendationRepository.save(movieRecomendation);
         movieRecomendations.add(movieRecomendation);
 
         Movie movie2 = MovieDTOService.getMovie(597).toMovie();
         movieRepository.save(movie2);
-        MovieRecomendation movieRecomendation2 = new MovieRecomendation(movie2);
+        MovieRecomendation movieRecomendation2 = new MovieRecomendation(movie2, request);
         movieRecomendationRepository.save(movieRecomendation2);
         movieRecomendations.add(movieRecomendation2);
 
 
         Movie movie3 = MovieDTOService.getMovie(310).toMovie();
         movieRepository.save(movie3);
-        MovieRecomendation movieRecomendation3 = new MovieRecomendation(movie3);
+        MovieRecomendation movieRecomendation3 = new MovieRecomendation(movie3, request);
         movieRecomendationRepository.save(movieRecomendation3);
         movieRecomendations.add(movieRecomendation3);
 
 
         Movie movie4 = MovieDTOService.getMovie(562).toMovie();
         movieRepository.save(movie4);
-        MovieRecomendation movieRecomendation4 = new MovieRecomendation(movie4);
+        MovieRecomendation movieRecomendation4 = new MovieRecomendation(movie4, request);
         movieRecomendationRepository.save(movieRecomendation4);
         movieRecomendations.add(movieRecomendation4);
 
 
         Movie movie5 = MovieDTOService.getMovie(116).toMovie();
         movieRepository.save(movie5);
-        MovieRecomendation movieRecomendation5 = new MovieRecomendation(movie5);
+        MovieRecomendation movieRecomendation5 = new MovieRecomendation(movie5, request);
         movieRecomendationRepository.save(movieRecomendation5);
         movieRecomendations.add(movieRecomendation5);
 
 
         Movie movie6 = MovieDTOService.getMovie(8489).toMovie();
         movieRepository.save(movie6);
-        MovieRecomendation movieRecomendation6 = new MovieRecomendation(movie6);
+        MovieRecomendation movieRecomendation6 = new MovieRecomendation(movie6, request);
         movieRecomendationRepository.save(movieRecomendation6);
         movieRecomendations.add(movieRecomendation6);
 
 
         Movie movie7 = MovieDTOService.getMovie(550).toMovie();
         movieRepository.save(movie7);
-        MovieRecomendation movieRecomendation7 = new MovieRecomendation(movie7);
+        MovieRecomendation movieRecomendation7 = new MovieRecomendation(movie7, request);
         movieRecomendationRepository.save(movieRecomendation7);
         movieRecomendations.add(movieRecomendation7);
 
 
         Movie movie8 = MovieDTOService.getMovie(19995).toMovie();
         movieRepository.save(movie8);
-        MovieRecomendation movieRecomendation8 = new MovieRecomendation(movie8);
+        MovieRecomendation movieRecomendation8 = new MovieRecomendation(movie8, request);
         movieRecomendationRepository.save(movieRecomendation8);
         movieRecomendations.add(movieRecomendation8);
 
 
         Movie movie9 = MovieDTOService.getMovie(857).toMovie();
         movieRepository.save(movie9);
-        MovieRecomendation movieRecomendation9 = new MovieRecomendation(movie9);
+        MovieRecomendation movieRecomendation9 = new MovieRecomendation(movie9, request);
         movieRecomendationRepository.save(movieRecomendation9);
         movieRecomendations.add(movieRecomendation9);
 
 
         Movie movie10 = MovieDTOService.getMovie(621).toMovie();
         movieRepository.save(movie10);
-        MovieRecomendation movieRecomendation10 = new MovieRecomendation(movie10);
+        MovieRecomendation movieRecomendation10 = new MovieRecomendation(movie10, request);
         movieRecomendationRepository.save(movieRecomendation10);
         movieRecomendations.add(movieRecomendation10);
 
