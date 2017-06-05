@@ -1,15 +1,9 @@
 package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.proyecto.serflix.domain.Movie;
-import com.proyecto.serflix.domain.MovieRecomendation;
-import com.proyecto.serflix.domain.Preferences;
-import com.proyecto.serflix.domain.Request;
+import com.proyecto.serflix.domain.*;
 import com.proyecto.serflix.domain.enumeration.Company;
-import com.proyecto.serflix.repository.MovieRecomendationRepository;
-import com.proyecto.serflix.repository.MovieRepository;
-import com.proyecto.serflix.repository.PreferencesRepository;
-import com.proyecto.serflix.repository.RequestRepository;
+import com.proyecto.serflix.repository.*;
 import com.proyecto.serflix.service.LearningEngine;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
 import com.proyecto.serflix.web.rest.util.HeaderUtil;
@@ -17,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -42,6 +38,9 @@ public class MovieRecomendationResource {
 
     @Inject
     private MovieRepository movieRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     @Inject
     private RequestRepository requestRepository;
@@ -158,9 +157,9 @@ public class MovieRecomendationResource {
         request.setCompany(Company.ALONE);
         request.setCreationDate(ZonedDateTime.now());
         request.setName("Test inicial");
-        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        //User u = userRepository.findByLogin(auth.getName());
-        //request.setUserRequester(u);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u = userRepository.findByLogin(auth.getName());
+        request.setUserRequester(u);
         request.setViewDate(ZonedDateTime.now());
         requestRepository.save(request);
 
