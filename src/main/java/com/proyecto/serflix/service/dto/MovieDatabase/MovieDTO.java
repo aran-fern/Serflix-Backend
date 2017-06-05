@@ -336,7 +336,11 @@ public class MovieDTO {
     public Movie toMovie(){
         Movie movie = new Movie();
         movie.setName(this.getTitle());
-        movie.setDescription(this.getOverview().substring(0, 5));
+        if (this.getOverview().length() > 150){
+            movie.setDescription(this.getOverview().substring(0, 149));
+        }else{
+            movie.setDescription(this.getOverview());
+        }
         movie.setIdExternalApi(Long.valueOf(this.getId()));
         movie.setCast("Cast...");
         movie.setPoster(this.getPosterPath());
