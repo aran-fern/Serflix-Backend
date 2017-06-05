@@ -83,13 +83,13 @@ public class LearningEngine {
                 points = 5;
                 break;
             case PRESELECTED:
-                points = 2;
+                points = 3;
                 break;
             case REJECTED:
-                points = -5;
+                points = -2;
                 break;
             case WATCHED_DISLIKED:
-                points = -7;
+                points = -4;
                 break;
             case WATCHED_LIKED:
                 points = 7;

@@ -1,6 +1,7 @@
 package com.proyecto.serflix.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.proyecto.serflix.domain.Movie;
 import com.proyecto.serflix.domain.MovieRecomendation;
 import com.proyecto.serflix.domain.Preferences;
 import com.proyecto.serflix.domain.Request;
@@ -20,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * REST controller for managing MovieRecomendation.
@@ -138,7 +136,7 @@ public class MovieRecomendationResource {
 
     @GetMapping("/movie-recomendations/test-inicial")
     @Timed
-    public List<MovieRecomendation> getTestInicial(@PathVariable Long id) {
+    public List<MovieRecomendation> getTestInicial() {
         /*
             El resplandor
             Titanic
@@ -151,18 +149,58 @@ public class MovieRecomendationResource {
             salvar soldado ryan
             grease
          */
-        List<MovieRecomendation> movieRecomendations = Arrays.asList(
-            new MovieRecomendation(MovieDTOService.getMovie(694).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(597).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(310).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(562).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(116).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(8489).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(550).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(19995).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(857).toMovie()),
-            new MovieRecomendation(MovieDTOService.getMovie(621).toMovie())
-        );
+
+        List<MovieRecomendation> movieRecomendations = new ArrayList<>();
+        Movie movie = MovieDTOService.getMovie(694).toMovie();
+        movieRepository.save(movie);
+        MovieRecomendation movieRecomendation = new MovieRecomendation(movie);
+        movieRecomendationRepository.save(movieRecomendation);
+
+        Movie movie2 = MovieDTOService.getMovie(597).toMovie();
+        movieRepository.save(movie2);
+        MovieRecomendation movieRecomendation2 = new MovieRecomendation(movie2);
+        movieRecomendationRepository.save(movieRecomendation2);
+
+        Movie movie3 = MovieDTOService.getMovie(310).toMovie();
+        movieRepository.save(movie3);
+        MovieRecomendation movieRecomendation3 = new MovieRecomendation(movie3);
+        movieRecomendationRepository.save(movieRecomendation3);
+
+        Movie movie4 = MovieDTOService.getMovie(562).toMovie();
+        movieRepository.save(movie4);
+        MovieRecomendation movieRecomendation4 = new MovieRecomendation(movie4);
+        movieRecomendationRepository.save(movieRecomendation4);
+
+        Movie movie5 = MovieDTOService.getMovie(116).toMovie();
+        movieRepository.save(movie5);
+        MovieRecomendation movieRecomendation5 = new MovieRecomendation(movie5);
+        movieRecomendationRepository.save(movieRecomendation5);
+
+        Movie movie6 = MovieDTOService.getMovie(8489).toMovie();
+        movieRepository.save(movie6);
+        MovieRecomendation movieRecomendation6 = new MovieRecomendation(movie6);
+        movieRecomendationRepository.save(movieRecomendation6);
+
+        Movie movie7 = MovieDTOService.getMovie(550).toMovie();
+        movieRepository.save(movie7);
+        MovieRecomendation movieRecomendation7 = new MovieRecomendation(movie7);
+        movieRecomendationRepository.save(movieRecomendation7);
+
+        Movie movie8 = MovieDTOService.getMovie(19995).toMovie();
+        movieRepository.save(movie8);
+        MovieRecomendation movieRecomendation8 = new MovieRecomendation(movie8);
+        movieRecomendationRepository.save(movieRecomendation8);
+
+        Movie movie9 = MovieDTOService.getMovie(857).toMovie();
+        movieRepository.save(movie9);
+        MovieRecomendation movieRecomendation9 = new MovieRecomendation(movie9);
+        movieRecomendationRepository.save(movieRecomendation9);
+
+        Movie movie10 = MovieDTOService.getMovie(621).toMovie();
+        movieRepository.save(movie10);
+        MovieRecomendation movieRecomendation10 = new MovieRecomendation(movie10);
+        movieRecomendationRepository.save(movieRecomendation10);
+
 
         return movieRecomendations;
     }
@@ -176,6 +214,7 @@ public class MovieRecomendationResource {
     @DeleteMapping("/movie-recomendations/{id}")
     @Timed
     public ResponseEntity<Void> deleteMovieRecomendation(@PathVariable Long id) {
+
         log.debug("REST request to delete MovieRecomendation : {}", id);
         movieRecomendationRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(

@@ -1,12 +1,10 @@
 package com.proyecto.serflix.service;
 
-import com.proyecto.serflix.domain.Forecast;
-import com.proyecto.serflix.domain.Movie;
-import com.proyecto.serflix.domain.MovieRecomendation;
-import com.proyecto.serflix.domain.Request;
+import com.proyecto.serflix.domain.*;
 import com.proyecto.serflix.domain.enumeration.Weather;
 import com.proyecto.serflix.repository.MovieRecomendationRepository;
 import com.proyecto.serflix.repository.MovieRepository;
+import com.proyecto.serflix.repository.PreferencesRepository;
 import com.proyecto.serflix.service.MovieDatabase.DiscoverService;
 import com.proyecto.serflix.service.MovieDatabase.MovieDTOService;
 import com.proyecto.serflix.service.WeatherDatabase.WeatherDTOService;
@@ -34,6 +32,9 @@ public class RecommendationEngine {
     @Inject
     private DiscoverService discoverService;
 
+    @Inject
+    private PreferencesRepository preferencesRepository;
+
     private List<MovieDTO> movieList;
 
     public boolean generateMovieRecommendations(Request request){
@@ -41,14 +42,22 @@ public class RecommendationEngine {
         MovieDTOService movieDTOService = new MovieDTOService();
         Forecast forecast = weatherDTOService.getCurrentForecast(request.getLocation().getLatLon());
 
+        List<Preferences> userPreferences = preferencesRepository.findByUserIsCurrentUser();
+
+        //    CLEAR,RAIN,SNOW,CLOUDY,PARTLY_CLOUDY
         switch (request.getCompany()){
             case ALONE:
-
-                break;
-            case PARTNER:
+                movieList = movieDTOService.getMostPopular();
                 if (!forecast.getWeather().equals(Weather.CLEAR)){
                     //Peliculas para un mal dia
-                    movieList = movieDTOService.getRainyFilms();
+                }else{
+                    //Peliculas para un dia soleado
+                }
+                break;
+            case PARTNER:
+                movieList = movieDTOService.getMostPopular();
+                if (!forecast.getWeather().equals(Weather.CLEAR)){
+                    //Peliculas para un mal dia
                 }else{
                     //Peliculas para un dia soleado
                 }
@@ -57,7 +66,11 @@ public class RecommendationEngine {
                 movieList = discoverService.getFamilyMovies();
                 break;
             case FRIENDS:
-
+                if(forecast.getWeather().equals(Weather.CLEAR) || forecast.getWeather().equals(Weather.PARTLY_CLOUDY)){
+                    //Peliculas para un buen dia
+                }else{
+                    //Peliculas mal dia
+                }
                 break;
             case ANOTHER_USER:
                 //"ANOTHER_USER" lo hacemos servir como si fuese con niños ya que no contemplamos otro usuario aún

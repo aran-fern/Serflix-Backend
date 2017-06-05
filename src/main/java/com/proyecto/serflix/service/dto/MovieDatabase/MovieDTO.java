@@ -57,7 +57,7 @@ public class MovieDTO {
     private String releaseDate;
     @SerializedName("revenue")
     @Expose
-    private Integer revenue;
+    private Long revenue;
     @SerializedName("runtime")
     @Expose
     private Integer runtime;
@@ -86,7 +86,7 @@ public class MovieDTO {
     public MovieDTO() {
     }
 
-    public MovieDTO(Boolean adult, String backdropPath, Object belongsToCollection, Integer budget, List<Genre> genres, String homepage, Integer id, String imdbId, String originalLanguage, String originalTitle, String overview, Double popularity, String posterPath, List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries, String releaseDate, Integer revenue, Integer runtime, List<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, Double voteAverage, Integer voteCount) {
+    public MovieDTO(Boolean adult, String backdropPath, Object belongsToCollection, Integer budget, List<Genre> genres, String homepage, Integer id, String imdbId, String originalLanguage, String originalTitle, String overview, Double popularity, String posterPath, List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries, String releaseDate, Long revenue, Integer runtime, List<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, Double voteAverage, Integer voteCount) {
         this.adult = adult;
         this.backdropPath = backdropPath;
         this.belongsToCollection = belongsToCollection;
@@ -234,11 +234,11 @@ public class MovieDTO {
         this.releaseDate = releaseDate;
     }
 
-    public Integer getRevenue() {
+    public Long getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(Integer revenue) {
+    public void setRevenue(Long revenue) {
         this.revenue = revenue;
     }
 
@@ -336,8 +336,12 @@ public class MovieDTO {
     public Movie toMovie(){
         Movie movie = new Movie();
         movie.setName(this.getTitle());
-        movie.setDescription(this.getOverview());
+        movie.setDescription(this.getOverview().substring(0, 5));
         movie.setIdExternalApi(Long.valueOf(this.getId()));
+        movie.setCast("Cast...");
+        movie.setPoster(this.getPosterPath());
+        movie.setTags(this.tagline);
+        movie.setYear(this.releaseDate);
         return movie;
     }
 }

@@ -1,10 +1,14 @@
 package com.proyecto.serflix.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.proyecto.serflix.domain.enumeration.Company;
 import com.proyecto.serflix.domain.enumeration.RecomendationResult;
+import com.proyecto.serflix.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -15,6 +19,9 @@ import java.util.Set;
 @Entity
 @Table(name = "movie_recomendation")
 public class MovieRecomendation implements Serializable {
+    @Transient
+    @Autowired
+    private UserRepository userRepository;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,6 +54,14 @@ public class MovieRecomendation implements Serializable {
     }
 
     public MovieRecomendation(Movie movieDTO) {
+        Request request = new Request();
+        request.setCompany(Company.ALONE);
+        request.setCreationDate(ZonedDateTime.now());
+        request.setName("Test inicial");
+        //Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        //User u = userRepository.findByLogin(auth.getName());
+        //request.setUserRequester(u);
+        request.setViewDate(ZonedDateTime.now());
         this.movieDTO = movieDTO;
     }
 
