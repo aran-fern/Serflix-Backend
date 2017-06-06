@@ -19,6 +19,60 @@ public class DiscoverService {
     public static final String apiKey = "e9146e088c2bfd128d974ae6fe70bdf4";
     static DiscoverRepository apiService = DiscoverRepository.retrofit.create(DiscoverRepository.class);
 
+    public List<MovieDTO> getAloneMovies(){
+        List<Result> resultList = new ArrayList<>();
+        List<MovieDTO> movies = new ArrayList<>();
+        Call<MovieDiscover> callMovie =
+            apiService.getMoviesByGenresAndCertification(apiKey, "14,53", null, null);
+        getResultsFromCall(callMovie, movies, resultList);
+        return movies;
+    }
+
+    public List<MovieDTO> getAloneClearMovies(){
+        List<Result> resultList = new ArrayList<>();
+        List<MovieDTO> movies = new ArrayList<>();
+        Call<MovieDiscover> callMovie =
+            apiService.getMoviesByGenresAndCertification(apiKey, "878,12", null, null);
+        getResultsFromCall(callMovie, movies, resultList);
+        return movies;
+    }
+
+    public List<MovieDTO> getPartnerMovies(){
+        List<Result> resultList = new ArrayList<>();
+        List<MovieDTO> movies = new ArrayList<>();
+        Call<MovieDiscover> callMovie =
+            apiService.getMoviesByGenresAndCertification(apiKey, "9648,27", null, null);
+        getResultsFromCall(callMovie, movies, resultList);
+        return movies;
+    }
+
+    public List<MovieDTO> getPartnerClearMovies(){
+        List<Result> resultList = new ArrayList<>();
+        List<MovieDTO> movies = new ArrayList<>();
+        Call<MovieDiscover> callMovie =
+            apiService.getMoviesByGenresAndCertification(apiKey, "10749,18", null, null);
+        getResultsFromCall(callMovie, movies, resultList);
+        return movies;
+    }
+
+    public List<MovieDTO> getFriendsMovies(){
+        List<Result> resultList = new ArrayList<>();
+        List<MovieDTO> movies = new ArrayList<>();
+        Call<MovieDiscover> callMovie =
+            apiService.getMoviesByGenresAndCertification(apiKey, "28,53", null, null);
+        getResultsFromCall(callMovie, movies, resultList);
+        return movies;
+    }
+
+    public List<MovieDTO> getFriendsClearMovies(){
+        List<Result> resultList = new ArrayList<>();
+        List<MovieDTO> movies = new ArrayList<>();
+        Call<MovieDiscover> callMovie =
+            apiService.getMoviesByGenresAndCertification(apiKey, "12,35", null, null);
+        getResultsFromCall(callMovie, movies, resultList);
+        return movies;
+    }
+
     public List<MovieDTO> getKidsMovies(){
         List<Result> resultList = new ArrayList<>();
         List<MovieDTO> movies = new ArrayList<>();

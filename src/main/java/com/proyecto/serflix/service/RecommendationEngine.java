@@ -47,19 +47,19 @@ public class RecommendationEngine {
         //    CLEAR,RAIN,SNOW,CLOUDY,PARTLY_CLOUDY
         switch (request.getCompany()){
             case ALONE:
-                movieList = movieDTOService.getMostPopular();
+                //movieList = movieDTOService.getMostPopular();
                 if (!forecast.getWeather().equals(Weather.CLEAR)){
-                    //Peliculas para un mal dia
+                    movieList = discoverService.getAloneMovies();
                 }else{
-                    //Peliculas para un dia soleado
+                    movieList = discoverService.getAloneClearMovies();
                 }
                 break;
             case PARTNER:
-                movieList = movieDTOService.getMostPopular();
+                //movieList = movieDTOService.getMostPopular();
                 if (!forecast.getWeather().equals(Weather.CLEAR)){
-                    //Peliculas para un mal dia
+                    movieList = discoverService.getPartnerMovies();
                 }else{
-                    //Peliculas para un dia soleado
+                    movieList = discoverService.getPartnerClearMovies();
                 }
                 break;
             case FAMILY:
@@ -67,9 +67,9 @@ public class RecommendationEngine {
                 break;
             case FRIENDS:
                 if(forecast.getWeather().equals(Weather.CLEAR) || forecast.getWeather().equals(Weather.PARTLY_CLOUDY)){
-                    //Peliculas para un buen dia
+                    movieList = discoverService.getFriendsClearMovies();
                 }else{
-                    //Peliculas mal dia
+                    movieList = discoverService.getFriendsMovies();
                 }
                 break;
             case ANOTHER_USER:
