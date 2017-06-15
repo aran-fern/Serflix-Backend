@@ -46,11 +46,13 @@ public class DiscoverService {
         return movies;
     }
 
+
+
     public List<MovieDTO> getPartnerClearMovies(){
         List<Result> resultList = new ArrayList<>();
         List<MovieDTO> movies = new ArrayList<>();
         Call<MovieDiscover> callMovie =
-            apiService.getMoviesByGenresAndCertification(apiKey, "10749,18", null, null);
+            apiService.getMoviesByGenresAndCertification(apiKey, "10749,35", null, null);
         getResultsFromCall(callMovie, movies, resultList);
         return movies;
     }
@@ -101,4 +103,6 @@ public class DiscoverService {
             e.printStackTrace();
         }
     }
+
+
 }

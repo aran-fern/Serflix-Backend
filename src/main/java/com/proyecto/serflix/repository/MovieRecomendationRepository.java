@@ -13,3 +13,4 @@ import java.util.List;
 public interface MovieRecomendationRepository extends JpaRepository<MovieRecomendation,Long> {
     List<MovieRecomendation> findByRequestIs(Request request);
 }
+

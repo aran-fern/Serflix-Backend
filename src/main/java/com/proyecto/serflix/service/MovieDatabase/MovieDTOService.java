@@ -64,9 +64,53 @@ public class MovieDTOService {
         return moviesDTO;
     }
 
+    public static List<MovieDTO> getComedyFilms(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getComedyMovies(35, apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
+
     public static List<MovieDTO> getKidFilms(){
         List<MovieDTO> moviesDTO = null;
         Call<MovieDTOList> callMovies = apiService.getAnimationMovies(16, apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
+
+    public static List<MovieDTO> getMisteryFilms(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getMisteryMovies(9648, apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
+
+    public static List<MovieDTO> getFictionFilms(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getFictionMovies(878, apiKey);
+        try {
+            moviesDTO = callMovies.execute().body().getMoviesDTO();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return moviesDTO;
+    }
+
+    public static List<MovieDTO> getRomanticFilms(){
+        List<MovieDTO> moviesDTO = null;
+        Call<MovieDTOList> callMovies = apiService.getRomanticMovies(10749, apiKey);
         try {
             moviesDTO = callMovies.execute().body().getMoviesDTO();
         } catch (IOException e) {

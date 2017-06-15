@@ -14,6 +14,7 @@ public interface DiscoverRepository {
     Call<MovieDiscover> getMoviesByGenresAndCertification(@Query("api_key") String apiKey, @Query("with_genres") String withGenres,
                                                           @Query("without_genres") String withoutGenres, @Query("certification") String certification);
 
+
     public static String url = "https://api.themoviedb.org/3/";
     public static final Retrofit retrofit = new Retrofit.Builder()
         .baseUrl(url)

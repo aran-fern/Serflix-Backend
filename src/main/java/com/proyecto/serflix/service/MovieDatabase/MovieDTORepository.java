@@ -32,8 +32,23 @@ public interface MovieDTORepository {
     @GET("genre/{genre_id}/movies?include_adult=true")
     Call<MovieDTOList> getHorrorMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
 
+    @GET("genre/{genre_id}/movies?include_adult=true")
+    Call<MovieDTOList> getComedyMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
+
+
     @GET("genre/{genre_id}/movies?include_adult=false")
     Call<MovieDTOList> getAnimationMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
+
+    @GET("genre/{genre_id}/movies?include_adult=false")
+    Call<MovieDTOList> getMisteryMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
+
+    @GET("genre/{genre_id}/movies?include_adult=false")
+    Call<MovieDTOList> getFictionMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
+
+    @GET("genre/{genre_id}/movies?include_adult=false")
+    Call<MovieDTOList> getRomanticMovies(@Path("genre_id") int id, @Query("api_key") String apiKey);
+
+
 
     @GET("movie/{movie_id}")
     Call<MovieDTO> getMovieInLang(@Path("movie_id") int id, @QueryMap Map<String, String> options);
